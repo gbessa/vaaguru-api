@@ -3,6 +3,7 @@ package br.com.hoptech.vaaguruapi.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,10 +21,12 @@ public class Rower {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; 
+    
+    @Column(unique=true)
+    private String email;
     
     private String name;
-    private String email;
     private String phone;
     private Boolean isSteerer;
     private String imageUrl;
@@ -31,6 +35,10 @@ public class Rower {
     @ManyToMany
     @JoinTable(name = "ROWER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams = new ArrayList<>();
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "rower")
+    private List<Inscription> inscriptions = new ArrayList<>();
     
     //private PaddleType paddle;
     //private Integer level;

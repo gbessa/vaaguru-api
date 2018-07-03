@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Team {
@@ -20,6 +23,10 @@ public class Team {
     private String name;
     private String description;
     private String imageUrl;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "team")
+    private List<Schedule> schedules = new ArrayList<>();
     
     @ManyToMany(mappedBy = "teams")
     private List<Rower> rowers = new ArrayList<>();
@@ -73,6 +80,14 @@ public class Team {
 
     public void setRowers(List<Rower> rowers) {
         this.rowers = rowers;
+    }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     @Override

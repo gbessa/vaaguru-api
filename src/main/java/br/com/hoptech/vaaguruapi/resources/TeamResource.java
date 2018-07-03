@@ -34,6 +34,13 @@ public class TeamResource {
 	return ResponseEntity.ok().body(listDto);
     }
     
+    @GetMapping(value="/{id}")
+    public ResponseEntity<TeamDTO> find(@PathVariable Integer id) {
+	Team obj = service.find(id);
+	TeamDTO objDto = new TeamDTO(obj);
+	return ResponseEntity.ok().body(objDto);
+    }
+    
     @GetMapping(value="/{teamId}/rowers")
     public ResponseEntity<List<RowerDTO>> findRowers(@PathVariable Integer teamId) {
 	List<Rower> list = rowerService.findByTeam(teamId);
