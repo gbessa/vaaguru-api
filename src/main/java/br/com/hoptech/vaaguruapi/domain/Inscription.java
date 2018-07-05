@@ -8,9 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.hoptech.vaaguruapi.dto.InscriptionNewDTO;
+import br.com.hoptech.vaaguruapi.services.RowerService;
 
 @Entity
 public class Inscription {
@@ -31,6 +35,9 @@ public class Inscription {
     @JoinColumn(name = "schedule_id")    
     private Schedule schedule;
     
+//    @Autowired
+//    RowerService rowerService;
+    
     public Inscription() {	
     }
 
@@ -41,7 +48,10 @@ public class Inscription {
 	this.schedule = schedule;
 	this.time = time;
     }
-
+    
+    public Inscription(InscriptionNewDTO objDto) {
+    }
+    
     public Integer getId() {
         return id;
     }
