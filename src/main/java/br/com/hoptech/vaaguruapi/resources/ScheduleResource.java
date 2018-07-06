@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.hoptech.vaaguruapi.domain.Schedule;
-import br.com.hoptech.vaaguruapi.dto.RowerDTO;
+import br.com.hoptech.vaaguruapi.dto.ScheduleDTO;
 import br.com.hoptech.vaaguruapi.services.ScheduleService;
 
 @RestController
@@ -22,16 +22,16 @@ public class ScheduleResource {
     ScheduleService service;
     
     @GetMapping()
-    public ResponseEntity<List<RowerDTO>> findAll() {
+    public ResponseEntity<List<ScheduleDTO>> findAll() {
 	List<Schedule> list = service.findAll();
-	List<ScheduleDTO> listDto = list.stream().map(obj -> new RowerDTO(obj)).collect(Collectors.toList());
+	List<ScheduleDTO> listDto = list.stream().map(obj -> new ScheduleDTO(obj)).collect(Collectors.toList());
 	return ResponseEntity.ok().body(listDto);
     }
     
     @GetMapping(value="/{id}")
     public ResponseEntity<ScheduleDTO> find(@PathVariable Integer id) {
 	Schedule obj = service.find(id);
-	ScheduleDTO objDto = new RowerDTO(obj);
+	ScheduleDTO objDto = new ScheduleDTO(obj);
 	return ResponseEntity.ok().body(objDto);
     }
     

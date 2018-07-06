@@ -29,6 +29,11 @@ public class Schedule {
 
     @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "rower_id")
+    private Rower rower;
+    
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
     
@@ -39,13 +44,14 @@ public class Schedule {
     public Schedule() {	
     }
 
-    public Schedule(Integer id, Date date, Integer status, Integer numOfSeats, Team team, String obs) {
+    public Schedule(Integer id, Date date, Integer status, Integer numOfSeats, Team team, Rower rower, String obs) {
 	super();
 	this.id = id;
 	this.date = date;
 	this.status = status;
 	this.numOfSeats = numOfSeats;
 	this.team = team;
+	this.rower = rower;
 	this.obs = obs;
     }
 
@@ -79,6 +85,14 @@ public class Schedule {
 
     public void setNumOfSeats(Integer numOfSeats) {
         this.numOfSeats = numOfSeats;
+    }
+
+    public Rower getRowerResponsable() {
+        return rower;
+    }
+
+    public void setRowerResponsable(Rower rowerResponsable) {
+        this.rower = rowerResponsable;
     }
 
     public Team getTeam() {

@@ -31,6 +31,9 @@ public class Rower {
     private Boolean isSteerer;
     private String imageUrl;
     
+    @JsonIgnore	
+    private String password;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "ROWER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
@@ -39,6 +42,10 @@ public class Rower {
     @JsonIgnore
     @OneToMany(mappedBy = "rower")
     private List<Inscription> inscriptions = new ArrayList<>();
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "rower")
+    private List<Schedule> schedules = new ArrayList<>();
     
     //private PaddleType paddle;
     //private Integer level;
@@ -105,6 +112,14 @@ public class Rower {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    
+    public String getPassword() {
+	return password;
+    }
+    
+    public void setPassword(String password) {
+	this.password = password;
     }
 
     public List<Team> getTeams() {

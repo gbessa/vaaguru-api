@@ -31,10 +31,13 @@ public class DBService {
     public void instantiateDatabase() throws ParseException {
 
 	//CREATING TEAMS AND ROWERS
-	Team team1 = new Team(null, "Fusão VAA", "Equipe do Rodrigão", "");
+	Team team1 = new Team(null, "Fusão VAA", "Equipe do Rodrigão", "fusaovaa_logo.jpeg");
 	Team team2 = new Team(null, "Mauna Loa - Charitas", "Primeira unidade da Mauna Loa", "");
 	Team team3 = new Team(null, "Mauna Loa - Itaipu", "Segunda unidade da Mauna Loa", "");
-	Team team4 = new Team(null, "Mauna Loa - Icaraí", "Terceira unidade da Mauna Loa", "");
+	Team team4 = new Team(null, "Mauna Loa - Icaraí", "Terceira unidade da Mauna Loa", "maunaloa_logo.jpg");
+	
+	Rower rowerResp1 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com.blocksend", "219999901", true, "thiagao_prof.jpeg");
+	Rower rowerResp2 = new Rower(null, "Rodrigao", "rodrigao@gmail.com.blocksend", "219999902", true, "rodrigao.jpg");
 	
 	Rower rower1 = new Rower(null, "Gustavo Bessa", "gbvirtual@gmail.com", "2199999991", true, "");
 	Rower rower2 = new Rower(null, "Fernando Tostes", "ftostes@gmail.com.blocksend", "2199999992", true, "");
@@ -55,12 +58,12 @@ public class DBService {
 	team1.getRowers().addAll(Arrays.asList(rower5, rower6));
 	
 	teamRepository.saveAll(Arrays.asList(team1, team2, team3, team4));
-	rowerRepository.saveAll(Arrays.asList(rower1, rower2, rower3, rower4, rower5, rower6));
+	rowerRepository.saveAll(Arrays.asList(rowerResp1, rowerResp2, rower1, rower2, rower3, rower4, rower5, rower6));
 	
 	
 	//CREATING SCHEDULE AND INSCRIPTIONS
-	Schedule schedule1 = new Schedule(null, new Date(), 1, 12, team1, "Primeiro treino depois da Copa");
-	Schedule schedule2 = new Schedule(null, new Date(), 1, 24, team4, "Mauna BI-CAMPEÃ");
+	Schedule schedule1 = new Schedule(null, new Date(), 1, 12, team1, rowerResp2, "Primeiro treino depois da Copa");
+	Schedule schedule2 = new Schedule(null, new Date(), 1, 24, team4, rowerResp1, "Mauna BI-CAMPEÃ");
 	
 	Inscription inscr1 = new Inscription(null, rower5, schedule1, new Date());
 	Inscription inscr2 = new Inscription(null, rower6, schedule1, new Date());
