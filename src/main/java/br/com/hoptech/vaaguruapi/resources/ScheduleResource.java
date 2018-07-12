@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.hoptech.vaaguruapi.domain.Inscription;
 import br.com.hoptech.vaaguruapi.domain.Schedule;
+import br.com.hoptech.vaaguruapi.dto.InscriptionDTO;
 import br.com.hoptech.vaaguruapi.dto.ScheduleDTO;
+import br.com.hoptech.vaaguruapi.services.InscriptionService;
 import br.com.hoptech.vaaguruapi.services.ScheduleService;
 
 @RestController
@@ -20,19 +23,28 @@ public class ScheduleResource {
 
     @Autowired
     ScheduleService service;
-    
+
+    @Autowired
+    InscriptionService inscriptionService;
+
     @GetMapping()
     public ResponseEntity<List<ScheduleDTO>> findAll() {
 	List<Schedule> list = service.findAll();
 	List<ScheduleDTO> listDto = list.stream().map(obj -> new ScheduleDTO(obj)).collect(Collectors.toList());
 	return ResponseEntity.ok().body(listDto);
     }
-    
-    @GetMapping(value="/{id}")
+
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ScheduleDTO> find(@PathVariable Integer id) {
 	Schedule obj = service.find(id);
 	ScheduleDTO objDto = new ScheduleDTO(obj);
 	return ResponseEntity.ok().body(objDto);
     }
-    
+
+    @GetMapping(value="/{scheduleId}/inscriptions")
+    public ResponseEntity<List<InscriptionDTO>> findInscriptions(@PathVariable Integer scheduleId) {
+	List<Inscription> list = inscriptionService.findBySchedule(scheduleId);
+	List<InscriptionDTO> listDto = list.stream().map(obj -> new InscriptionDTO(obj)).collect(Collectors.toList());
+	return ResponseEntity.ok().body(listDto);
+    }
 }

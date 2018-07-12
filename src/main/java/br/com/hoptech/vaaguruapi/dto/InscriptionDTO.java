@@ -15,7 +15,7 @@ public class InscriptionDTO implements Serializable  {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date time;
     
-    private Integer rower_id;
+    private RowerDTO rower;
     private Integer schedule_id;
     
     public Integer getSchedule_id() {
@@ -32,7 +32,7 @@ public class InscriptionDTO implements Serializable  {
     public InscriptionDTO(Inscription obj) {
 	this.id = obj.getId();
 	this.time = obj.getTime();
-	this.rower_id = obj.getRower().getId();
+	this.rower = new RowerDTO(obj.getRower());
 	this.schedule_id = obj.getSchedule().getId();
     }
 
@@ -52,12 +52,12 @@ public class InscriptionDTO implements Serializable  {
         this.time = time;
     }
 
-    public Integer getRower_id() {
-	return rower_id;
+    public RowerDTO getRower() {
+	return rower;
     }
 
-    public void setRower_id(Integer rower_id) {
-	this.rower_id = rower_id;
+    public void setRower(RowerDTO rower) {
+	this.rower = rower;
     }
             
 }

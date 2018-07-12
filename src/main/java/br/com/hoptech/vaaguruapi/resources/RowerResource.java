@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.hoptech.vaaguruapi.domain.Rower;
-import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.dto.RowerDTO;
-import br.com.hoptech.vaaguruapi.dto.TeamDTO;
 import br.com.hoptech.vaaguruapi.services.RowerService;
 
 @RestController

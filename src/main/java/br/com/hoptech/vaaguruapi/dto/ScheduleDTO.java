@@ -5,9 +5,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.hoptech.vaaguruapi.domain.Inscription;
 import br.com.hoptech.vaaguruapi.domain.Schedule;
-import br.com.hoptech.vaaguruapi.domain.Team;
 
 public class ScheduleDTO implements Serializable  {
     private static final long serialVersionUID = 1L;

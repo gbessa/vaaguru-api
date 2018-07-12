@@ -1,6 +1,7 @@
 package br.com.hoptech.vaaguruapi.services;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -33,6 +34,10 @@ public class InscriptionService {
 	obj.setTime(new Date());
 	obj = repo.save(obj);
 	return obj;
+    }
+    
+    public List<Inscription> findBySchedule(Integer scheduleId) {
+	return repo.findBySchedule_id(scheduleId);
     }
     
 }
