@@ -2,6 +2,7 @@ package br.com.hoptech.vaaguruapi.services;
 
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +63,14 @@ public class DBService {
 	
 	
 	//CREATING SCHEDULE AND INSCRIPTIONS
-	Schedule schedule1 = new Schedule(null, new Date(), 1, 12, team1, rowerResp2, "Primeiro treino depois da Copa");
-	Schedule schedule2 = new Schedule(null, new Date(), 1, 24, team4, rowerResp1, "Mauna BI-CAMPEÃ");
+	Calendar cal = Calendar.getInstance();
+	cal.set(Calendar.HOUR_OF_DAY, 5);
+	cal.set(Calendar.MINUTE, 45);
+	Schedule schedule1 = new Schedule(null, cal.getTime(), 1, 12, team1, rowerResp2, "Primeiro treino depois da Copa");
+	Schedule schedule2 = new Schedule(null, cal.getTime(), 1, 24, team4, rowerResp1, "Mauna BI-CAMPEÃ");
+	cal.set(Calendar.HOUR_OF_DAY, 7);
+	cal.set(Calendar.MINUTE, 15);
+	Schedule schedule3 = new Schedule(null, cal.getTime(), 1, 18, team4, rowerResp1, "Mauna BI-CAMPEÃ");
 	
 	Inscription inscr1 = new Inscription(null, rower5, schedule1, new Date());
 	Inscription inscr2 = new Inscription(null, rower6, schedule1, new Date());
@@ -74,7 +81,7 @@ public class DBService {
 	schedule1.getInscriptions().addAll(Arrays.asList(inscr1, inscr2));
 	schedule2.getInscriptions().addAll(Arrays.asList(inscr3, inscr4, inscr5));
 	
-	scheduleRepository.saveAll(Arrays.asList(schedule1, schedule2));
+	scheduleRepository.saveAll(Arrays.asList(schedule1, schedule2, schedule3));
 	inscriptionRepository.saveAll(Arrays.asList(inscr1, inscr2, inscr3, inscr4, inscr5));
     }
 
