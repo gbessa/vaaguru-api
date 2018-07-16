@@ -42,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    "/teams/**"};
 
     private static final String[] PUBLIC_MATCHERS_POST = { 
-	    "/auth/forgot**" };
+	    "/auth/forgot**",
+	    "/inscriptions/**"};
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -9,15 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.hoptech.vaaguruapi.dto.InscriptionNewDTO;
-import br.com.hoptech.vaaguruapi.services.RowerService;
 
 @Entity
 public class Inscription {
+    @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
     
     @Id

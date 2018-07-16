@@ -3,8 +3,6 @@ package br.com.hoptech.vaaguruapi.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import br.com.hoptech.vaaguruapi.domain.Schedule;
 
 public class ScheduleDTO implements Serializable  {
@@ -12,7 +10,6 @@ public class ScheduleDTO implements Serializable  {
 
     private Integer id;
     
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date date;
     
     private Integer status;

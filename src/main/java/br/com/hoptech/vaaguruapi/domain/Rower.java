@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Rower {
+    @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
     
     @Id

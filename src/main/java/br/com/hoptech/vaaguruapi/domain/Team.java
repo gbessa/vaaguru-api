@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Team {
+    @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
     
     @Id
