@@ -40,4 +40,9 @@ public class InscriptionService {
 	return repo.findBySchedule_id(scheduleId);
     }
     
+    public void delete(Integer id) {
+	Inscription obj = find(id);
+	repo.delete(obj);
+    }
+    
 }

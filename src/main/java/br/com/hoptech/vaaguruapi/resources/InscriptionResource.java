@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,14 +46,29 @@ public class InscriptionResource {
         
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody InscriptionNewDTO objDto) {
+	Rower rower;
 	Inscription obj = new Inscription(objDto);
-	Rower rower = rowerService.find(objDto.getRower_id());
+	if (objDto.getRower_id() != null) {
+	    System.out.println("123");
+	    rower = rowerService.find(objDto.getRower_id());	    
+	} else {
+	    System.out.println("321 ==> " + objDto.getRower_email());
+	    rower = rowerService.findByEmail(objDto.getRower_email());
+	}
+	System.out.println("88888888888");
+	System.out.println(rower);
 	Schedule schedule = scheduleService.find(objDto.getSchedule_id());
 	obj.setRower(rower);
 	obj.setSchedule(schedule);
 	obj = service.insert(obj);
 	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 	return ResponseEntity.created(uri).build();
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id) {
+	service.delete(id);
+	return ResponseEntity.accepted().build();
     }
     
 }

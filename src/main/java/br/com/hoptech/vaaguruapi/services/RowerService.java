@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.hoptech.vaaguruapi.domain.Rower;
-import br.com.hoptech.vaaguruapi.enums.Roles;
 import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 import br.com.hoptech.vaaguruapi.security.UserSS;
 import br.com.hoptech.vaaguruapi.services.exceptions.AuthorizationException;
@@ -19,9 +17,6 @@ public class RowerService {
 
     @Autowired
     RowerRepository repo;
-    
-    @Autowired
-    private BCryptPasswordEncoder pwdEncoder;
     
     public Rower find(Integer id) {
 	Optional<Rower> obj = repo.findById(id);
@@ -35,7 +30,8 @@ public class RowerService {
     
     public Rower findByEmail(String email) {
 	UserSS user = UserService.authenticated();
-	if (user==null || !user.hasRole(Roles.ADMIN) && !email.equals(user.getUsername())) {
+	//if (user==null || !user.hasRole(Roles.ADMIN) && !email.equals(user.getUsername())) {
+	if (user==null || !email.equals(user.getUsername())) {
 	    throw new AuthorizationException("Access denied");
 	}
 	
