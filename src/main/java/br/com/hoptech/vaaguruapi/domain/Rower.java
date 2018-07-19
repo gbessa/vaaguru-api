@@ -57,7 +57,7 @@ public class Rower {
     public Rower() {	
     }
     
-    public Rower(Integer id, String name, String email, String phone, Boolean isSteerer, String imageUrl) {
+    public Rower(Integer id, String name, String email, String phone, Boolean isSteerer, String imageUrl, String password) {
 	super();
 	this.id = id;
 	this.name = name;
@@ -65,6 +65,7 @@ public class Rower {
 	this.phone = phone;
 	this.isSteerer = isSteerer;
 	this.imageUrl = imageUrl;
+	this.password = password;
     }
 
     public Integer getId() {

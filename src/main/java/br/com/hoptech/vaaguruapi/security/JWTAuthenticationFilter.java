@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.hoptech.vaaguruapi.dto.CredentialsDTO;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter  {
+    
     private AuthenticationManager authenticationManager;
 
     private JWTUtil jwtUtil;
@@ -37,9 +38,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	try {
 	    CredentialsDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredentialsDTO.class);
+	    System.out.println(creds.getEmail() + "    ----   " + creds.getPassword());
 	    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(),
 		    creds.getPassword(), new ArrayList<>());
 	    Authentication auth = authenticationManager.authenticate(authToken);
+	    System.out.println("oi---2");
+	    System.out.println(auth);
 	    return auth;
 	} catch (IOException e) {
 	    throw new RuntimeException(e);
@@ -52,7 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	String username = ((UserSS) auth.getPrincipal()).getUsername();
 	String token = jwtUtil.generateToken(username);
 	res.addHeader("Authorization", "Bearer " + token);
-	res.addHeader("access-control-expose-headers", "Authorization"); //Se não tiver isso o CORS não permite a leitura do header customizado
+	res.addHeader("access-control-expose-headers", "Authorization");
     }
 
     private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -67,8 +71,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	private String json() {
 	    long date = new Date().getTime();
-	    return "{\"timestamp\": " + date + ", " + "\"status\": 401, " + "\"error\": \"Não autorizado\", "
-		    + "\"message\": \"Email ou senha inválidos\", " + "\"path\": \"/login\"}";
+	    return "{\"timestamp\": " + date + ", " + "\"status\": 401, " + "\"error\": \"Not authorized\", "
+		    + "\"message\": \"Email or password invalid\", " + "\"path\": \"/login\"}";
 	}
 
     }

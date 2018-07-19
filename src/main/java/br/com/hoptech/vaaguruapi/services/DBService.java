@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.hoptech.vaaguruapi.domain.Inscription;
@@ -28,6 +29,8 @@ public class DBService {
     private ScheduleRepository scheduleRepository;
     @Autowired
     private InscriptionRepository inscriptionRepository;
+    @Autowired
+    private BCryptPasswordEncoder pwdEncoder;
 
     public void instantiateDatabase() throws ParseException {
 
@@ -37,15 +40,15 @@ public class DBService {
 	Team team3 = new Team(null, "Mauna Loa - Itaipu", "Segunda unidade da Mauna Loa", "");
 	Team team4 = new Team(null, "Mauna Loa - Icaraí", "Terceira unidade da Mauna Loa", "maunaloa_logo.jpg");
 	
-	Rower rowerResp1 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com.blocksend", "219999901", true, "thiagao_prof.jpeg");
-	Rower rowerResp2 = new Rower(null, "Rodrigao", "rodrigao@gmail.com.blocksend", "219999902", true, "rodrigao.jpg");
+	Rower rowerResp1 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com.blocksend", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
+	Rower rowerResp2 = new Rower(null, "Rodrigao", "rodrigao@gmail.com", "219999902", true, "rodrigao.jpg", pwdEncoder.encode("123"));
 	
-	Rower rower1 = new Rower(null, "Gustavo Bessa", "gbvirtual@gmail.com", "2199999991", true, "");
-	Rower rower2 = new Rower(null, "Fernando Tostes", "ftostes@gmail.com.blocksend", "2199999992", true, "");
-	Rower rower3 = new Rower(null, "Adriana Fagundes", "dri@gmail.com.blocksend", "2199999993", true, "");
-	Rower rower4 = new Rower(null, "Plinio Salgado", "plinio@gmail.com.blocksend", "2199999994", true, "");
-	Rower rower5 = new Rower(null, "Ana Rita", "ana.rita@gmail.com.blocksend", "2199999995", true, "");
-	Rower rower6 = new Rower(null, "Paulo Eduardo", "peduardo@gmail.com.blocksend", "2199999996", true, "");
+	Rower rower1 = new Rower(null, "Gustavo Bessa", "gbvirtual@gmail.com", "2199999991", true, "", pwdEncoder.encode("123"));
+	Rower rower2 = new Rower(null, "Fernando Tostes", "ftostes@gmail.com.blocksend", "2199999992", true, "", pwdEncoder.encode("123"));
+	Rower rower3 = new Rower(null, "Adriana Fagundes", "dri@gmail.com.blocksend", "2199999993", true, "", pwdEncoder.encode("123"));
+	Rower rower4 = new Rower(null, "Plinio Salgado", "plinio@gmail.com.blocksend", "2199999994", true, "", pwdEncoder.encode("123"));
+	Rower rower5 = new Rower(null, "Ana Rita", "ana.rita@gmail.com.blocksend", "2199999995", true, "", pwdEncoder.encode("123"));
+	Rower rower6 = new Rower(null, "Paulo Eduardo", "peduardo@gmail.com.blocksend", "2199999996", true, "", pwdEncoder.encode("123"));
 	
 	rower1.getTeams().addAll(Arrays.asList(team2, team4));
 	rower2.getTeams().addAll(Arrays.asList(team4));
