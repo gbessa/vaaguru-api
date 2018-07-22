@@ -1,21 +1,31 @@
 package br.com.hoptech.vaaguruapi.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.hoptech.vaaguruapi.domain.Inscription;
+import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Schedule;
+import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.dto.InscriptionDTO;
 import br.com.hoptech.vaaguruapi.dto.ScheduleDTO;
+import br.com.hoptech.vaaguruapi.dto.ScheduleNewDTO;
 import br.com.hoptech.vaaguruapi.services.InscriptionService;
 import br.com.hoptech.vaaguruapi.services.ScheduleService;
+import br.com.hoptech.vaaguruapi.services.TeamService;
 
 @RestController
 @RequestMapping("/schedules")
@@ -26,7 +36,10 @@ public class ScheduleResource {
 
     @Autowired
     InscriptionService inscriptionService;
-
+    
+    @Autowired
+    TeamService teamService;
+    
     @GetMapping()
     public ResponseEntity<List<ScheduleDTO>> findAll() {
 	List<Schedule> list = service.findAll();
@@ -46,5 +59,13 @@ public class ScheduleResource {
 	List<Inscription> list = inscriptionService.findBySchedule(scheduleId);
 	List<InscriptionDTO> listDto = list.stream().map(obj -> new InscriptionDTO(obj)).collect(Collectors.toList());
 	return ResponseEntity.ok().body(listDto);
+    }
+    
+    @PostMapping
+    public ResponseEntity<Void> insert(@Valid @RequestBody ScheduleNewDTO objDto) {
+	Schedule obj = service.fromDTO(objDto);
+	obj = service.insert(obj);
+	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	return ResponseEntity.created(uri).build();
     }
 }

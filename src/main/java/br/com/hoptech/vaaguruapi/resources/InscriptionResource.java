@@ -46,20 +46,7 @@ public class InscriptionResource {
         
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody InscriptionNewDTO objDto) {
-	Rower rower;
-	Inscription obj = new Inscription(objDto);
-	if (objDto.getRower_id() != null) {
-	    System.out.println("123");
-	    rower = rowerService.find(objDto.getRower_id());	    
-	} else {
-	    System.out.println("321 ==> " + objDto.getRower_email());
-	    rower = rowerService.findByEmail(objDto.getRower_email());
-	}
-	System.out.println("88888888888");
-	System.out.println(rower);
-	Schedule schedule = scheduleService.find(objDto.getSchedule_id());
-	obj.setRower(rower);
-	obj.setSchedule(schedule);
+	Inscription obj = service.fromDTO(objDto);
 	obj = service.insert(obj);
 	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 	return ResponseEntity.created(uri).build();

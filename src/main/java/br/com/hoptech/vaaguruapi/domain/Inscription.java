@@ -47,8 +47,8 @@ public class Inscription {
 	this.time = time;
     }
     
-    public Inscription(InscriptionNewDTO objDto) {
-    }
+//    public Inscription(InscriptionNewDTO objDto) {
+//    }
     
     public Integer getId() {
         return id;
