@@ -56,7 +56,7 @@ public class RowerService {
     }    
     
     public List<Rower> findByTeam(Integer teamId) {
-	return repo.findByTeams_id(teamId);
+	return repo.findByTeamsMember_id(teamId);
     }
     
 }

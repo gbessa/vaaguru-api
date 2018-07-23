@@ -1,7 +1,9 @@
 package br.com.hoptech.vaaguruapi.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
+import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Team;
 
 public class TeamDTO implements Serializable  {
@@ -12,6 +14,10 @@ public class TeamDTO implements Serializable  {
     private String description;
     private String imageUrl;
     
+    private List<Rower> owners;
+    
+    private List<Rower> members;
+    
     public TeamDTO() {	
     }
     
@@ -20,6 +26,8 @@ public class TeamDTO implements Serializable  {
 	name = obj.getName();
 	description = obj.getDescription();
 	imageUrl = obj.getImageUrl();
+	owners = obj.getOwners();
+	members = obj.getMembers();
     }
 
     public Integer getId() {
@@ -53,5 +61,21 @@ public class TeamDTO implements Serializable  {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-        
+
+    public List<Rower> getOwners() {
+        return owners;
+    }
+
+    public void setOwners(List<Rower> owners) {
+        this.owners = owners;
+    }
+
+    public List<Rower> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Rower> members) {
+        this.members = members;
+    }
+                
 }
