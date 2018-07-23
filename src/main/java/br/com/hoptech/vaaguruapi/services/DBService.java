@@ -65,6 +65,7 @@ public class DBService {
 	rowerResp3.getOwners().addAll(Arrays.asList(team3));
 	
 	rowerResp4.getOwners().addAll(Arrays.asList(team4));
+	rowerResp4.getMembers().addAll(Arrays.asList(team2, team4));
 	rowerResp4_1.getOwners().addAll(Arrays.asList(team4));	
 	rower2.getMembers().addAll(Arrays.asList(team4));
 	rower3.getMembers().addAll(Arrays.asList(team4));
@@ -74,12 +75,12 @@ public class DBService {
 	team1.getMembers().addAll(Arrays.asList(rower5, rower6));
 		
 	team2.getOwners().addAll(Arrays.asList(rowerResp2));
-	team2.getMembers().addAll(Arrays.asList(rower1));
+	team2.getMembers().addAll(Arrays.asList(rower1, rowerResp4));
 	
-	team3.getOwners().addAll(Arrays.asList(rowerResp3));
+	team3.getOwners().addAll(Arrays.asList(rowerResp3, rowerResp4));
 	
 	team4.getOwners().addAll(Arrays.asList(rowerResp4, rowerResp4_1));
-	team4.getMembers().addAll(Arrays.asList(rower1, rower2, rower3, rower4));
+	team4.getMembers().addAll(Arrays.asList(rower1, rower2, rower3, rower4, rowerResp4));
 	
 	teamRepository.saveAll(Arrays.asList(team1, team2, team3, team4));
 	rowerRepository.saveAll(Arrays.asList(rowerResp1, rowerResp2, rowerResp3, rowerResp4, rowerResp4_1));
