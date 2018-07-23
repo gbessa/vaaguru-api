@@ -34,7 +34,8 @@ public class ScheduleService {
     }
     
     public List<Schedule> findAll() {
-	return repo.findAll();
+	//return repo.findAll();
+	return repo.findAllByTeamIn(teamService.findAll());
     }
     
     public Schedule fromDTO(ScheduleNewDTO objDto) {
