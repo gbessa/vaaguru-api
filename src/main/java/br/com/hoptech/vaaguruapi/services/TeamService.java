@@ -25,5 +25,4 @@ public class TeamService {
     public List<Team> findAll() {
 	return repo.findAll();
     }
-    
 }

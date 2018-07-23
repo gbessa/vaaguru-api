@@ -7,8 +7,9 @@ import javax.validation.constraints.NotNull;
 public class InscriptionNewDTO implements Serializable  {
     private static final long serialVersionUID = 1L;
 
-    @NotNull(message="Preenchimento obrigatório")
+    //@NotNull(message="Preenchimento obrigatório") ver uma forma de validar com OR
     private Integer rower_id;
+    private String rower_email;
     
     @NotNull(message="Preenchimento obrigatório")
     private Integer schedule_id;
@@ -32,4 +33,11 @@ public class InscriptionNewDTO implements Serializable  {
         this.schedule_id = schedule_id;
     }
               
+    public String getRower_email() {
+	return rower_email;
+    }
+    
+    public void setRower_email(String rower_email) {
+	this.rower_email = rower_email;
+    }
 }

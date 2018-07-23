@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.hoptech.vaaguruapi.dto.ScheduleDTO;
+
 @Entity
 public class Schedule {
     @SuppressWarnings("unused")
@@ -54,6 +56,10 @@ public class Schedule {
 	this.team = team;
 	this.rower = rower;
 	this.obs = obs;
+    }
+    
+    public Schedule(ScheduleDTO objDto) {
+	
     }
 
     public Integer getId() {

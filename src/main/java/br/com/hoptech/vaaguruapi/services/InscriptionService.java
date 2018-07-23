@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.hoptech.vaaguruapi.domain.Inscription;
+import br.com.hoptech.vaaguruapi.domain.Rower;
+import br.com.hoptech.vaaguruapi.domain.Schedule;
+import br.com.hoptech.vaaguruapi.dto.InscriptionNewDTO;
 import br.com.hoptech.vaaguruapi.repositories.InscriptionRepository;
 import br.com.hoptech.vaaguruapi.services.exceptions.ObjectNotFoundException;
 
@@ -21,6 +24,9 @@ public class InscriptionService {
     
     @Autowired
     RowerService rowerService;
+    
+    @Autowired
+    ScheduleService scheduleService;
     
     public Inscription find(Integer id) {
 	Optional<Inscription> obj = repo.findById(id);
@@ -38,6 +44,27 @@ public class InscriptionService {
     
     public List<Inscription> findBySchedule(Integer scheduleId) {
 	return repo.findBySchedule_id(scheduleId);
+    }
+    
+    public void delete(Integer id) {
+	Inscription obj = find(id);
+	repo.delete(obj);
+    }
+    
+    public Inscription fromDTO(InscriptionNewDTO objDto) {
+	Rower rower;
+	Inscription obj = new Inscription();
+	if (objDto.getRower_id() != null) {
+	    System.out.println("123");
+	    rower = rowerService.find(objDto.getRower_id());	    
+	} else {
+	    System.out.println("321 ==> " + objDto.getRower_email());
+	    rower = rowerService.findByEmail(objDto.getRower_email());
+	}
+	Schedule schedule = scheduleService.find(objDto.getSchedule_id());
+	obj.setRower(rower);
+	obj.setSchedule(schedule);
+	return obj;
     }
     
 }

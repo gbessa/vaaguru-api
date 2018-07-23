@@ -36,14 +36,14 @@ public class DBService {
 
 	//CREATING TEAMS AND ROWERS
 	Team team1 = new Team(null, "Fusão VAA", "Equipe do Rodrigão", "fusaovaa_logo.jpeg");
-	Team team2 = new Team(null, "Mauna Loa - Charitas", "Primeira unidade da Mauna Loa", "");
-	Team team3 = new Team(null, "Mauna Loa - Itaipu", "Segunda unidade da Mauna Loa", "");
+	Team team2 = new Team(null, "Mauna Loa - Charitas", "Primeira unidade da Mauna Loa", "maunaloa_logo.jpg");
+	Team team3 = new Team(null, "Mauna Loa - Itaipu", "Segunda unidade da Mauna Loa", "maunaloa_logo.jpg");
 	Team team4 = new Team(null, "Mauna Loa - Icaraí", "Terceira unidade da Mauna Loa", "maunaloa_logo.jpg");
 	
-	Rower rowerResp1 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com.blocksend", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
+	Rower rowerResp1 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
 	Rower rowerResp2 = new Rower(null, "Rodrigao", "rodrigao@gmail.com", "219999902", true, "rodrigao.jpg", pwdEncoder.encode("123"));
 	
-	Rower rower1 = new Rower(null, "Gustavo Bessa", "gbvirtual@gmail.com", "2199999991", true, "", pwdEncoder.encode("123"));
+	Rower rower1 = new Rower(null, "Gustavo Bessa", "gbvirtual@gmail.com", "2199999991", true, "gbessa.jpg", pwdEncoder.encode("123"));
 	Rower rower2 = new Rower(null, "Fernando Tostes", "ftostes@gmail.com.blocksend", "2199999992", true, "", pwdEncoder.encode("123"));
 	Rower rower3 = new Rower(null, "Adriana Fagundes", "dri@gmail.com.blocksend", "2199999993", true, "", pwdEncoder.encode("123"));
 	Rower rower4 = new Rower(null, "Plinio Salgado", "plinio@gmail.com.blocksend", "2199999994", true, "", pwdEncoder.encode("123"));
