@@ -40,7 +40,7 @@ public class DBService {
 	Team team3 = new Team(null, "Mauna Loa - Itaipu", "Segunda unidade da Mauna Loa", "maunaloa_logo.jpg");
 	Team team4 = new Team(null, "Mauna Loa - Icaraí", "Terceira unidade da Mauna Loa", "maunaloa_logo.jpg");
 	
-	Rower rowerResp1 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com.blocksend", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
+	Rower rowerResp1 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
 	Rower rowerResp2 = new Rower(null, "Rodrigao", "rodrigao@gmail.com", "219999902", true, "rodrigao.jpg", pwdEncoder.encode("123"));
 	
 	Rower rower1 = new Rower(null, "Gustavo Bessa", "gbvirtual@gmail.com", "2199999991", true, "gbessa.jpg", pwdEncoder.encode("123"));

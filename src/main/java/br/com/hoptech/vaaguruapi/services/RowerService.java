@@ -28,6 +28,18 @@ public class RowerService {
 	return repo.findAll();
     }
     
+    public Rower findMe() {
+	UserSS user = UserService.authenticated();
+	//if (user==null || !user.hasRole(Roles.ADMIN) && !email.equals(user.getUsername())) {
+	String email = user.getUsername();
+	Rower obj = repo.findByEmail(email);
+	if (obj == null) {
+	    throw new ObjectNotFoundException(
+		    	"Objeto não encontrado. Email: " + email + ", Tipo: " + Rower.class.getName());
+	}
+	return obj;
+    } 
+    
     public Rower findByEmail(String email) {
 	UserSS user = UserService.authenticated();
 	//if (user==null || !user.hasRole(Roles.ADMIN) && !email.equals(user.getUsername())) {
