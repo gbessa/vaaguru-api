@@ -36,13 +36,18 @@ public class DBService {
 
 	//CREATING TEAMS AND ROWERS
 	Team team1 = new Team(null, "Fusão VAA", "Equipe do Rodrigão", "fusaovaa_logo.jpeg");
+	Rower rowerResp1 = new Rower(null, "Rodrigao", "rodrigao@gmail.com", "219999902", true, "rodrigao.jpg", pwdEncoder.encode("123"));
+
 	Team team2 = new Team(null, "Mauna Loa - Charitas", "Primeira unidade da Mauna Loa", "maunaloa_logo.jpg");
+	Rower rowerResp2 = new Rower(null, "Manel", "manel@gmail.com", "219999902", true, "", pwdEncoder.encode("123"));
+
 	Team team3 = new Team(null, "Mauna Loa - Itaipu", "Segunda unidade da Mauna Loa", "maunaloa_logo.jpg");
+	Rower rowerResp3 = new Rower(null, "Vini", "vini@gmail.com", "219999902", true, "", pwdEncoder.encode("123"));
+
 	Team team4 = new Team(null, "Mauna Loa - Icaraí", "Terceira unidade da Mauna Loa", "maunaloa_logo.jpg");
-	
-	Rower rowerResp1 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
-	Rower rowerResp2 = new Rower(null, "Rodrigao", "rodrigao@gmail.com", "219999902", true, "rodrigao.jpg", pwdEncoder.encode("123"));
-	
+	Rower rowerResp4 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
+	Rower rowerResp4_1 = new Rower(null, "Hau", "hau@gmail.com", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
+		
 	Rower rower1 = new Rower(null, "Gustavo Bessa", "gbvirtual@gmail.com", "2199999991", true, "gbessa.jpg", pwdEncoder.encode("123"));
 	Rower rower2 = new Rower(null, "Fernando Tostes", "ftostes@gmail.com.blocksend", "2199999992", true, "", pwdEncoder.encode("123"));
 	Rower rower3 = new Rower(null, "Adriana Fagundes", "dri@gmail.com.blocksend", "2199999993", true, "", pwdEncoder.encode("123"));
@@ -50,21 +55,37 @@ public class DBService {
 	Rower rower5 = new Rower(null, "Ana Rita", "ana.rita@gmail.com.blocksend", "2199999995", true, "", pwdEncoder.encode("123"));
 	Rower rower6 = new Rower(null, "Paulo Eduardo", "peduardo@gmail.com.blocksend", "2199999996", true, "", pwdEncoder.encode("123"));
 	
-	rower1.getTeams().addAll(Arrays.asList(team2, team4));
-	rower2.getTeams().addAll(Arrays.asList(team4));
-	rower3.getTeams().addAll(Arrays.asList(team4));
-	rower4.getTeams().addAll(Arrays.asList(team4));
-	rower5.getTeams().addAll(Arrays.asList(team1));
-	rower6.getTeams().addAll(Arrays.asList(team1));
+	rowerResp1.getOwners().addAll(Arrays.asList(team1));
+	rower6.getMembers().addAll(Arrays.asList(team1));
+	rower5.getMembers().addAll(Arrays.asList(team1));
 	
-	team2.getRowers().addAll(Arrays.asList(rower1));
-	team4.getRowers().addAll(Arrays.asList(rower1, rower2, rower3, rower4));
-	team1.getRowers().addAll(Arrays.asList(rower5, rower6));
+	rowerResp2.getOwners().addAll(Arrays.asList(team2));
+	rower1.getMembers().addAll(Arrays.asList(team2, team4));
+	
+	rowerResp3.getOwners().addAll(Arrays.asList(team3));
+	
+	rowerResp4.getOwners().addAll(Arrays.asList(team4));
+	rowerResp4.getMembers().addAll(Arrays.asList(team2, team4));
+	rowerResp4_1.getOwners().addAll(Arrays.asList(team4));	
+	rower2.getMembers().addAll(Arrays.asList(team4));
+	rower3.getMembers().addAll(Arrays.asList(team4));
+	rower4.getMembers().addAll(Arrays.asList(team4));
+	
+	team1.getOwners().addAll(Arrays.asList(rowerResp1));
+	team1.getMembers().addAll(Arrays.asList(rower5, rower6));
+		
+	team2.getOwners().addAll(Arrays.asList(rowerResp2));
+	team2.getMembers().addAll(Arrays.asList(rower1, rowerResp4));
+	
+	team3.getOwners().addAll(Arrays.asList(rowerResp3, rowerResp4));
+	
+	team4.getOwners().addAll(Arrays.asList(rowerResp4, rowerResp4_1));
+	team4.getMembers().addAll(Arrays.asList(rower1, rower2, rower3, rower4, rowerResp4));
 	
 	teamRepository.saveAll(Arrays.asList(team1, team2, team3, team4));
-	rowerRepository.saveAll(Arrays.asList(rowerResp1, rowerResp2, rower1, rower2, rower3, rower4, rower5, rower6));
-	
-	
+	rowerRepository.saveAll(Arrays.asList(rowerResp1, rowerResp2, rowerResp3, rowerResp4, rowerResp4_1));
+	rowerRepository.saveAll(Arrays.asList(rower1, rower2, rower3, rower4, rower5, rower6));
+		
 	//CREATING SCHEDULE AND INSCRIPTIONS
 	Calendar cal = Calendar.getInstance();
 	cal.set(Calendar.HOUR_OF_DAY, 5);

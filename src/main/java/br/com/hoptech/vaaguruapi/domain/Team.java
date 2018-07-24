@@ -29,9 +29,14 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<Schedule> schedules = new ArrayList<>();
     
-    @ManyToMany(mappedBy = "teams")
-    private List<Rower> rowers = new ArrayList<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "teamsOwner")
+    private List<Rower> owners = new ArrayList<>();   
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "teamsMember")
+    private List<Rower> members = new ArrayList<>();
+    
     public Team() {	
     }
 
@@ -75,20 +80,28 @@ public class Team {
         this.imageUrl = imageUrl;
     }
 
-    public List<Rower> getRowers() {
-        return rowers;
-    }
-
-    public void setRowers(List<Rower> rowers) {
-        this.rowers = rowers;
-    }
-
     public List<Schedule> getSchedules() {
         return schedules;
     }
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+    
+    public List<Rower> getMembers() {
+	return members;
+    }
+    
+    public void setMembers(List<Rower> members) {
+	this.members = members;
+    }
+    
+    public List<Rower> getOwners() {
+	return owners;
+    }
+    
+    public void setOwners(List<Rower> owners) {
+	this.owners = owners;
     }
 
     @Override
@@ -115,7 +128,5 @@ public class Team {
 	    return false;
 	return true;
     }
-    
-    
     
 }

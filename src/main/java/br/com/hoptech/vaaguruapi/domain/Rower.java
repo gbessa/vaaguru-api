@@ -34,12 +34,6 @@ public class Rower {
     
     @JsonIgnore	
     private String password;
-
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "ROWER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
-    private List<Team> teams = new ArrayList<>();
-    
     @JsonIgnore
     @OneToMany(mappedBy = "rower")
     private List<Inscription> inscriptions = new ArrayList<>();
@@ -47,6 +41,17 @@ public class Rower {
     @JsonIgnore
     @OneToMany(mappedBy = "rower")
     private List<Schedule> schedules = new ArrayList<>();
+    
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "OWNER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    private List<Team> teamsOwner = new ArrayList<>();
+    
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "MEMBER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    private List<Team> teamsMember = new ArrayList<>();
+    
     
     //private PaddleType paddle;
     //private Integer level;
@@ -123,13 +128,21 @@ public class Rower {
     public void setPassword(String password) {
 	this.password = password;
     }
-
-    public List<Team> getTeams() {
-        return teams;
+   
+    public List<Team> getOwners() {
+        return teamsOwner;
     }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setOwners(List<Team> owners) {
+        this.teamsOwner = owners;
+    }
+
+    public List<Team> getMembers() {
+        return teamsMember;
+    }
+
+    public void setMembers(List<Team> members) {
+        this.teamsMember = members;
     }
 
     @Override

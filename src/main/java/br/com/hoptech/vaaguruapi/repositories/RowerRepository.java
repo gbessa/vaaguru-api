@@ -11,7 +11,7 @@ import br.com.hoptech.vaaguruapi.domain.Rower;
 @Repository
 public interface RowerRepository extends JpaRepository<Rower, Integer>{
     
-    List<Rower> findByTeams_id(Integer id);
+    List<Rower> findByTeamsMember_id(Integer id);
     
     @Transactional(readOnly=true)
     Rower findByEmail(String email); 
