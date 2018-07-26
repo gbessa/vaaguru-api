@@ -1,5 +1,6 @@
 package br.com.hoptech.vaaguruapi.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Team;
@@ -47,6 +51,12 @@ public class TeamResource {
 	List<RowerDTO> listDto = list.stream().map(obj -> new RowerDTO(obj))
 		.collect(Collectors.toList());
 	return ResponseEntity.ok().body(listDto);
+    }
+    
+    @PostMapping(value="/picture")
+    public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file) {
+	URI uri = service.uploadTeamPicture(file);	
+	return ResponseEntity.created(uri).build();
     }
     
 }
