@@ -4,15 +4,19 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Team;
@@ -32,8 +36,10 @@ public class TeamResource {
     RowerService rowerService;
     
     @GetMapping()
-    public ResponseEntity<List<TeamDTO>> findAll() {
-	List<Team> list = service.findAll();
+    public ResponseEntity<List<TeamDTO>> findAll(@RequestParam(name = "isowner", defaultValue = "false") Boolean isOwner) {
+	List<Team> list;
+	if (isOwner) list = service.findOwned();
+	else list = service.findAll();
 	List<TeamDTO> listDto = list.stream().map(obj -> new TeamDTO(obj)).collect(Collectors.toList());
 	return ResponseEntity.ok().body(listDto);
     }
@@ -52,6 +58,22 @@ public class TeamResource {
 		.collect(Collectors.toList());
 	return ResponseEntity.ok().body(listDto);
     }
+
+    @GetMapping(value="/{teamId}/owners")
+    public ResponseEntity<List<RowerDTO>> findOwners(@PathVariable Integer teamId) {
+	Team obj = service.find(teamId);
+	List<RowerDTO> listDto = obj.getOwners().stream().map(rower -> new RowerDTO(rower))
+		.collect(Collectors.toList());
+	return ResponseEntity.ok().body(listDto);
+    }
+    
+    @PostMapping
+    public ResponseEntity<Void> insert(@Valid @RequestBody TeamDTO objDto) {
+	Team obj = service.fromDTO(objDto);
+	obj = service.insert(obj);
+	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	return ResponseEntity.created(uri).build();
+    }    
     
     @PostMapping(value="/picture")
     public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file) {

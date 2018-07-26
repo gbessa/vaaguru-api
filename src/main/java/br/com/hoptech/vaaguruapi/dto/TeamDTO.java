@@ -2,8 +2,12 @@ package br.com.hoptech.vaaguruapi.dto;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import br.com.hoptech.vaaguruapi.domain.Rower;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import br.com.hoptech.vaaguruapi.domain.Team;
 
 public class TeamDTO implements Serializable  {
@@ -14,9 +18,12 @@ public class TeamDTO implements Serializable  {
     private String description;
     private String imageUrl;
     
-    private List<Rower> owners;
+    @JsonIgnore
+    private String owner_email;
     
-    private List<Rower> members;
+    private List<RowerDTO> owners;
+    
+    private List<RowerDTO> members;
     
     public TeamDTO() {	
     }
@@ -26,8 +33,8 @@ public class TeamDTO implements Serializable  {
 	name = obj.getName();
 	description = obj.getDescription();
 	imageUrl = obj.getImageUrl();
-	owners = obj.getOwners();
-	members = obj.getMembers();
+	owners = obj.getOwners().stream().map(owner -> new RowerDTO(owner)).collect(Collectors.toList());
+	members = obj.getMembers().stream().map(member -> new RowerDTO(member)).collect(Collectors.toList());
     }
 
     public Integer getId() {
@@ -62,20 +69,29 @@ public class TeamDTO implements Serializable  {
         this.imageUrl = imageUrl;
     }
 
-    public List<Rower> getOwners() {
+    public List<RowerDTO> getOwners() {
         return owners;
     }
 
-    public void setOwners(List<Rower> owners) {
+    public void setOwners(List<RowerDTO> owners) {
         this.owners = owners;
     }
 
-    public List<Rower> getMembers() {
+    public List<RowerDTO> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Rower> members) {
+    public void setMembers(List<RowerDTO> members) {
         this.members = members;
+    }
+
+    public String getOwner_email() {
+        return owner_email;
+    }
+
+    @JsonProperty
+    public void setOwner_email(String owner_email) {
+        this.owner_email = owner_email;
     }
                 
 }

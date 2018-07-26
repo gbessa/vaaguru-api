@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.hoptech.vaaguruapi.dto.RowerDTO;
+
 @Entity
 public class Rower {
     @SuppressWarnings("unused")

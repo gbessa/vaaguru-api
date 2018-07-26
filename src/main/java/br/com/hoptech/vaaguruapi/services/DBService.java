@@ -47,6 +47,8 @@ public class DBService {
 	Team team4 = new Team(null, "Mauna Loa - Icaraí", "Terceira unidade da Mauna Loa", "maunaloa_logo.jpg");
 	Rower rowerResp4 = new Rower(null, "Thiago Barcelos", "thiagao@gmail.com", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
 	Rower rowerResp4_1 = new Rower(null, "Hau", "hau@gmail.com", "219999901", true, "thiagao_prof.jpeg", pwdEncoder.encode("123"));
+	
+	Team team5 = new Team(null, "Wavemasters", "Equipe de remadores brabos", "wavemasters_logo.jpeg");
 		
 	Rower rower1 = new Rower(null, "Gustavo Bessa", "gbvirtual@gmail.com", "2199999991", true, "gbessa.jpg", pwdEncoder.encode("123"));
 	Rower rower2 = new Rower(null, "Fernando Tostes", "ftostes@gmail.com.blocksend", "2199999992", true, "", pwdEncoder.encode("123"));
@@ -60,7 +62,7 @@ public class DBService {
 	rower5.getMembers().addAll(Arrays.asList(team1));
 	
 	rowerResp2.getOwners().addAll(Arrays.asList(team2));
-	rower1.getMembers().addAll(Arrays.asList(team2, team4));
+	rower1.getMembers().addAll(Arrays.asList(team2, team4, team5));
 	
 	rowerResp3.getOwners().addAll(Arrays.asList(team3));
 	
@@ -82,7 +84,9 @@ public class DBService {
 	team4.getOwners().addAll(Arrays.asList(rowerResp4, rowerResp4_1));
 	team4.getMembers().addAll(Arrays.asList(rower1, rower2, rower3, rower4, rowerResp4));
 	
-	teamRepository.saveAll(Arrays.asList(team1, team2, team3, team4));
+	team5.getMembers().addAll(Arrays.asList(rower1));
+	
+	teamRepository.saveAll(Arrays.asList(team1, team2, team3, team4, team5));
 	rowerRepository.saveAll(Arrays.asList(rowerResp1, rowerResp2, rowerResp3, rowerResp4, rowerResp4_1));
 	rowerRepository.saveAll(Arrays.asList(rower1, rower2, rower3, rower4, rower5, rower6));
 		

@@ -2,8 +2,10 @@ package br.com.hoptech.vaaguruapi.services;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -13,7 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.hoptech.vaaguruapi.domain.Rower;
+import br.com.hoptech.vaaguruapi.domain.Schedule;
 import br.com.hoptech.vaaguruapi.domain.Team;
+import br.com.hoptech.vaaguruapi.dto.ScheduleNewDTO;
+import br.com.hoptech.vaaguruapi.dto.TeamDTO;
+import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 import br.com.hoptech.vaaguruapi.repositories.TeamRepository;
 import br.com.hoptech.vaaguruapi.security.UserSS;
 import br.com.hoptech.vaaguruapi.services.exceptions.AuthorizationException;
@@ -27,6 +33,9 @@ public class TeamService {
     
     @Autowired
     RowerService rowerService;
+    
+    @Autowired
+    RowerRepository rowerRepository;
     
     @Autowired
     ImageService imageService;
@@ -54,10 +63,30 @@ public class TeamService {
 	return repo.findAll(rower.getId());
     }
     
+    public List<Team> findOwned() {
+ 	UserSS user = UserService.authenticated();
+ 	String email = user.getUsername();
+ 	Rower rower = rowerService.findByEmail(email);
+ 	return repo.findOwned(rower.getId());
+     }    
+    
+    public Team fromDTO(TeamDTO objDto) {
+	Team obj = new Team(null, objDto.getName(), objDto.getDescription(), objDto.getImageUrl());
+	//List<Rower> owners = objDto.getOwners().stream().map(owner -> rowerService.findByEmail(owner.getEmail())).collect(Collectors.toList());
+	Rower owner = rowerService.findByEmail(objDto.getOwner_email());
+	obj.getOwners().add(owner);
+	return obj;
+    }    
+
     @Transactional
     public Team insert(Team obj) {
+	System.out.println(obj.getOwners().get(0).getEmail());
 	obj.setId(null);
 	obj = repo.save(obj);
+	
+	Rower owner = rowerService.findByEmail(obj.getOwners().get(0).getEmail());
+	owner.getOwners().add(obj);
+	rowerRepository.save(owner);
 	return obj;
     }
     

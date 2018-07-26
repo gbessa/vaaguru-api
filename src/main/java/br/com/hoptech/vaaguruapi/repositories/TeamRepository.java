@@ -18,4 +18,10 @@ public interface TeamRepository extends JpaRepository<Team, Integer>{
     		"SELECT * FROM TEAM INNER JOIN OWNER_TEAM ON OWNER_TEAM.TEAM_ID  = TEAM.ID WHERE OWNER_TEAM.ROWER_ID = :rowerId  UNION SELECT * FROM TEAM INNER JOIN MEMBER_TEAM ON MEMBER_TEAM.TEAM_ID  = TEAM.ID WHERE MEMBER_TEAM.ROWER_ID = :rowerId ",
 	nativeQuery = true)
     List<Team> findAll(@Param("rowerId") Integer rowerId);
+    
+    @Transactional(readOnly=true)
+    @Query(value = 
+    		"SELECT * FROM TEAM INNER JOIN OWNER_TEAM ON OWNER_TEAM.TEAM_ID  = TEAM.ID WHERE OWNER_TEAM.ROWER_ID = :rowerId",
+	nativeQuery = true)
+    List<Team> findOwned(@Param("rowerId") Integer rowerId);
 }
