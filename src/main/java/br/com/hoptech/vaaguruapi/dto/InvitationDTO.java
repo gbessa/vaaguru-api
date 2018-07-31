@@ -3,6 +3,7 @@ package br.com.hoptech.vaaguruapi.dto;
 import br.com.hoptech.vaaguruapi.domain.Invitation;
 
 public class InvitationDTO {
+    @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
 
     private String invited_email;
@@ -17,8 +18,8 @@ public class InvitationDTO {
     }
     
     public InvitationDTO(Invitation obj) {
-	//this.invited_email = obj.
-	//this.inviter_email = obj.
+	this.invited_email = obj.getInvitedEmail();
+	this.inviter_email = obj.getInviter().getEmail();
 	this.team_id = obj.getTeam().getId();
 	this.status = obj.getStatus();
     }

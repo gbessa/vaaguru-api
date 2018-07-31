@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.hoptech.vaaguruapi.dto.RowerDTO;
-
 @Entity
 public class Rower {
     @SuppressWarnings("unused")
@@ -54,10 +52,9 @@ public class Rower {
     @JoinTable(name = "MEMBER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teamsMember = new ArrayList<>();
     
-    @JsonIgnore
-    @OneToMany(mappedBy="rower")
-    private List<Invitation> invitations = new ArrayList<>();
-       
+//    @JsonIgnore
+//    @OneToMany(mappedBy="invited")
+//    private List<Invitation> invitations = new ArrayList<>();
     
     //private PaddleType paddle;
     //private Integer level;

@@ -13,5 +13,8 @@ public interface InvitationRepository extends JpaRepository<Invitation, Integer>
     
     @Transactional(readOnly=true)
     List<Invitation> findByTeam_id(Integer id);
+    
+//    @Transactional(readOnly=true)
+//    List<Invitation> findByInvited_id(Integer id);    
 
 }

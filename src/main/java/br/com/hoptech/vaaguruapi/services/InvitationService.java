@@ -9,10 +9,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.hoptech.vaaguruapi.domain.Inscription;
 import br.com.hoptech.vaaguruapi.domain.Invitation;
-import br.com.hoptech.vaaguruapi.domain.Rower;
-import br.com.hoptech.vaaguruapi.domain.Schedule;
+import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.dto.InvitationDTO;
 import br.com.hoptech.vaaguruapi.repositories.InvitationRepository;
 import br.com.hoptech.vaaguruapi.services.exceptions.ObjectNotFoundException;
@@ -22,6 +20,9 @@ public class InvitationService {
     
     @Autowired
     InvitationRepository repo;
+    
+    @Autowired
+    TeamService teamService;
     
     public Invitation find(Integer id) {
 	Optional<Invitation> obj = repo.findById(id);
@@ -41,24 +42,19 @@ public class InvitationService {
 	return repo.findByTeam_id(teamId);
     }
     
+//    public List<Invitation> findByRower(Integer rowerId) {
+//	return repo.findByInvited_id(rowerId);
+//    }    
+    
     public void delete(Integer id) {
 	Invitation obj = find(id);
 	repo.delete(obj);
     }
 
     public Invitation fromDTO(InvitationDTO objDto) {
-	Rower rower;
-	Inscription obj = new Inscription();
-	if (objDto.getRower_id() != null) {
-	    System.out.println("123");
-	    rower = rowerService.find(objDto.getRower_id());	    
-	} else {
-	    System.out.println("321 ==> " + objDto.getRower_email());
-	    rower = rowerService.findByEmail(objDto.getRower_email());
-	}
-	Schedule schedule = scheduleService.find(objDto.getSchedule_id());
-	obj.setRower(rower);
-	obj.setSchedule(schedule);
+	Invitation obj = new Invitation();
+	Team team = teamService.find(objDto.getTeam_id());
+	obj.setTeam(team);
 	return obj;
     }
 }

@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.hoptech.vaaguruapi.domain.Invitation;
 import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Team;
+import br.com.hoptech.vaaguruapi.dto.InvitationDTO;
 import br.com.hoptech.vaaguruapi.dto.RowerDTO;
 import br.com.hoptech.vaaguruapi.dto.TeamDTO;
+import br.com.hoptech.vaaguruapi.services.InvitationService;
 import br.com.hoptech.vaaguruapi.services.RowerService;
 import br.com.hoptech.vaaguruapi.services.TeamService;
 
@@ -34,6 +37,9 @@ public class TeamResource {
     
     @Autowired
     RowerService rowerService;
+    
+    @Autowired
+    InvitationService invitationService;
     
     @GetMapping()
     public ResponseEntity<List<TeamDTO>> findAll(@RequestParam(name = "isowner", defaultValue = "false") Boolean isOwner) {
@@ -59,6 +65,14 @@ public class TeamResource {
 	return ResponseEntity.ok().body(listDto);
     }
 
+    @GetMapping(value="/{teamId}/invitations")
+    public ResponseEntity<List<InvitationDTO>> findInvitations(@PathVariable Integer teamId) {
+	List<Invitation> list = invitationService.findByTeam(teamId);
+	List<InvitationDTO> listDto = list.stream().map(obj -> new InvitationDTO(obj))
+		.collect(Collectors.toList());
+	return ResponseEntity.ok().body(listDto);
+    }    
+    
     @GetMapping(value="/{teamId}/owners")
     public ResponseEntity<List<RowerDTO>> findOwners(@PathVariable Integer teamId) {
 	Team obj = service.find(teamId);

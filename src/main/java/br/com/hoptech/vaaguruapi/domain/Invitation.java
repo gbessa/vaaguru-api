@@ -24,19 +24,26 @@ public class Invitation {
     private Team team;
     
     @ManyToOne
-    @JoinColumn(name="rower_id")
-    private Rower rower;
+    @JoinColumn(name="inviter_id")
+    private Rower inviter;
     
-//    @ManyToOne
-//    @JoinColumn(name="inviter_id")
-//    private Rower inviter;
+    private String invitedEmail;
     
     private Integer status;
         
     
     public Invitation() {
     }
-
+    
+    public Invitation(Integer id, Date time, Team team, Rower inviter, String invitedEmail, Integer status) {
+	super();
+	this.id = id;
+	this.time = time;
+	this.team = team;
+	this.inviter = inviter;
+	this.invitedEmail = invitedEmail;
+	this.status = status;
+    }
 
     public Integer getId() {
         return id;
@@ -68,24 +75,24 @@ public class Invitation {
     }
 
 
-    public Rower getRower() {
-        return rower;
+    public Rower getInviter() {
+        return inviter;
     }
 
 
-    public void setRower(Rower rower) {
-        this.rower = rower;
+    public void setInviter(Rower inviter) {
+        this.inviter = inviter;
     }
 
 
-//    public Rower getInviter() {
-//        return inviter;
-//    }
-//
-//
-//    public void setInviter(Rower inviter) {
-//        this.inviter = inviter;
-//    }
+    public String getInvitedEmail() {
+        return invitedEmail;
+    }
+
+
+    public void setInvitedEmail(String invitedEmail) {
+        this.invitedEmail = invitedEmail;
+    }
 
 
     public Integer getStatus() {
@@ -96,7 +103,5 @@ public class Invitation {
     public void setStatus(Integer status) {
         this.status = status;
     }
-    
-    
     
 }

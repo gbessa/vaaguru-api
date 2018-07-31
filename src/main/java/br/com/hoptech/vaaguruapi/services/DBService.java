@@ -10,10 +10,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.hoptech.vaaguruapi.domain.Inscription;
+import br.com.hoptech.vaaguruapi.domain.Invitation;
 import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Schedule;
 import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.repositories.InscriptionRepository;
+import br.com.hoptech.vaaguruapi.repositories.InvitationRepository;
 import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 import br.com.hoptech.vaaguruapi.repositories.ScheduleRepository;
 import br.com.hoptech.vaaguruapi.repositories.TeamRepository;
@@ -29,6 +31,9 @@ public class DBService {
     private ScheduleRepository scheduleRepository;
     @Autowired
     private InscriptionRepository inscriptionRepository;
+    @Autowired
+    private InvitationRepository invitationRepository;
+    
     @Autowired
     private BCryptPasswordEncoder pwdEncoder;
 
@@ -111,6 +116,12 @@ public class DBService {
 	
 	scheduleRepository.saveAll(Arrays.asList(schedule1, schedule2, schedule3));
 	inscriptionRepository.saveAll(Arrays.asList(inscr1, inscr2, inscr3, inscr4, inscr5));
+	
+	Invitation invitation1 = new Invitation(null, new Date(), team4, rowerResp4, "adalberto@gmail.com", 1);
+	Invitation invitation2 = new Invitation(null, new Date(), team4, rowerResp4, "felizberto@gmail.com", 1);
+	Invitation invitation3 = new Invitation(null, new Date(), team4, rowerResp4, "dagoberto@gmail.com", 1);
+	invitationRepository.saveAll(Arrays.asList(invitation1, invitation2, invitation3));
+	
     }
 
 }

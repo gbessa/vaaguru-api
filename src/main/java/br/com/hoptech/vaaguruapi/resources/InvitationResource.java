@@ -1,6 +1,8 @@
 package br.com.hoptech.vaaguruapi.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -15,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.hoptech.vaaguruapi.domain.Inscription;
 import br.com.hoptech.vaaguruapi.domain.Invitation;
-import br.com.hoptech.vaaguruapi.dto.InscriptionNewDTO;
 import br.com.hoptech.vaaguruapi.dto.InvitationDTO;
 import br.com.hoptech.vaaguruapi.services.InvitationService;
 
@@ -34,10 +34,18 @@ public class InvitationResource {
 	InvitationDTO objDto = new InvitationDTO(obj);
 	return ResponseEntity.ok().body(objDto);
     }
+    
+//    @GetMapping(value="/{rowerId}/invitations")
+//    public ResponseEntity<List<InvitationDTO>> findInvitations(@PathVariable Integer rowerId) {
+//	List<Invitation> list = service.findByRower(rowerId);
+//	List<InvitationDTO> listDto = list.stream().map(obj -> new InvitationDTO(obj))
+//		.collect(Collectors.toList());
+//	return ResponseEntity.ok().body(listDto);
+//    }    
         
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody InscriptionNewDTO objDto) {
-	Inscription obj = service.fromDTO(objDto);
+    public ResponseEntity<Void> insert(@Valid @RequestBody InvitationDTO objDto) {
+	Invitation obj = service.fromDTO(objDto);
 	obj = service.insert(obj);
 	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 	return ResponseEntity.created(uri).build();

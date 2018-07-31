@@ -3,6 +3,7 @@ package br.com.hoptech.vaaguruapi.dto;
 import java.util.Date;
 
 public class ScheduleNewDTO {
+    @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
     
     private Date date;
