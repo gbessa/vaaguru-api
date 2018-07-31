@@ -39,6 +39,10 @@ public class Team {
     @ManyToMany(mappedBy = "teamsMember")
     private List<Rower> members = new ArrayList<>();
     
+    @JsonIgnore
+    @OneToMany(mappedBy="team")
+    private List<Invitation> invitations = new ArrayList<>();
+    
     public Team() {	
     }
 

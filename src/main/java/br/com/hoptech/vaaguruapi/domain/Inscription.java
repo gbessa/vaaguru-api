@@ -11,8 +11,6 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.hoptech.vaaguruapi.dto.InscriptionNewDTO;
-
 @Entity
 public class Inscription {
     @SuppressWarnings("unused")
@@ -33,9 +31,6 @@ public class Inscription {
     @JoinColumn(name = "schedule_id")    
     private Schedule schedule;
     
-//    @Autowired
-//    RowerService rowerService;
-    
     public Inscription() {	
     }
 
@@ -46,9 +41,6 @@ public class Inscription {
 	this.schedule = schedule;
 	this.time = time;
     }
-    
-//    public Inscription(InscriptionNewDTO objDto) {
-//    }
     
     public Integer getId() {
         return id;
