@@ -2,10 +2,8 @@ package br.com.hoptech.vaaguruapi.services;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -15,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.hoptech.vaaguruapi.domain.Rower;
-import br.com.hoptech.vaaguruapi.domain.Schedule;
 import br.com.hoptech.vaaguruapi.domain.Team;
-import br.com.hoptech.vaaguruapi.dto.ScheduleNewDTO;
 import br.com.hoptech.vaaguruapi.dto.TeamDTO;
 import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 import br.com.hoptech.vaaguruapi.repositories.TeamRepository;
@@ -32,7 +28,7 @@ public class TeamService {
     TeamRepository repo;
     
     @Autowired
-    RowerService rowerService;
+    RowerService rowerService;	
     
     @Autowired
     RowerRepository rowerRepository;

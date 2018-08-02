@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.hoptech.vaaguruapi.domain.Inscription;
-import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Schedule;
-import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.dto.InscriptionDTO;
 import br.com.hoptech.vaaguruapi.dto.ScheduleDTO;
 import br.com.hoptech.vaaguruapi.dto.ScheduleNewDTO;
