@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.hoptech.vaaguruapi.domain.Invitation;
+import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.dto.InvitationDTO;
 import br.com.hoptech.vaaguruapi.repositories.InvitationRepository;
@@ -23,6 +24,9 @@ public class InvitationService {
     
     @Autowired
     TeamService teamService;
+    
+    @Autowired
+    RowerService rowerService;
     
     public Invitation find(Integer id) {
 	Optional<Invitation> obj = repo.findById(id);
@@ -42,19 +46,15 @@ public class InvitationService {
 	return repo.findByTeam_id(teamId);
     }
     
-//    public List<Invitation> findByRower(Integer rowerId) {
-//	return repo.findByInvited_id(rowerId);
-//    }    
-    
     public void delete(Integer id) {
 	Invitation obj = find(id);
 	repo.delete(obj);
     }
 
     public Invitation fromDTO(InvitationDTO objDto) {
-	Invitation obj = new Invitation();
 	Team team = teamService.find(objDto.getTeam_id());
-	obj.setTeam(team);
+	Rower inviter = rowerService.findByEmail(objDto.getInviter_email());
+	Invitation obj = new Invitation(null, null, team, inviter, objDto.getInvited_email(), objDto.getStatus());
 	return obj;
     }
 }
