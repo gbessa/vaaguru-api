@@ -103,5 +103,13 @@ public class Invitation {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+	return "Invitation [time=" + time + ", team=" + team + ", inviter=" + inviter + ", invitedEmail=" + invitedEmail
+		+ ", status=" + status + "]";
+    }
+    
+    
     
 }

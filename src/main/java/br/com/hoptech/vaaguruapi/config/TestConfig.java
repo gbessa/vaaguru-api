@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.hoptech.vaaguruapi.services.DBService;
 import br.com.hoptech.vaaguruapi.services.EmailService;
-import br.com.hoptech.vaaguruapi.services.MockEmailService;
+import br.com.hoptech.vaaguruapi.services.SmtpEmailService;
 
 @Configuration
 @Profile("test")
@@ -26,7 +26,8 @@ public class TestConfig {
     
     @Bean
     public EmailService emailService() {
-	return new MockEmailService();	
+	return new SmtpEmailService();
+//	return new MockEmailService();	
     }
     
 }

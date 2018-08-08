@@ -55,10 +55,8 @@ public class InscriptionService {
 	Rower rower;
 	Inscription obj = new Inscription();
 	if (objDto.getRower_id() != null) {
-	    System.out.println("123");
 	    rower = rowerService.find(objDto.getRower_id());	    
 	} else {
-	    System.out.println("321 ==> " + objDto.getRower_email());
 	    rower = rowerService.findByEmail(objDto.getRower_email());
 	}
 	Schedule schedule = scheduleService.find(objDto.getSchedule_id());

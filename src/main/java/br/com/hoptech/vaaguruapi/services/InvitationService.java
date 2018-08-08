@@ -28,10 +28,17 @@ public class InvitationService {
     @Autowired
     RowerService rowerService;
     
+    @Autowired
+    private EmailService emailService;
+    
     public Invitation find(Integer id) {
 	Optional<Invitation> obj = repo.findById(id);
 	return obj.orElseThrow(() -> new ObjectNotFoundException(
 		"Objeto não encontrado! Id: " + id + ", Tipo: " + Invitation.class.getName())); 
+    }
+    
+    public List<Invitation> findByTeam(Integer teamId) {
+	return repo.findByTeam_id(teamId);
     }
     
     @Transactional
@@ -39,11 +46,9 @@ public class InvitationService {
 	obj.setId(null);
 	obj.setTime(new Date());
 	obj = repo.save(obj);
+	//emailService.sendInvitationEmail(obj);
+	emailService.sendInvitationHtmlEmail(obj);
 	return obj;
-    }
-    
-    public List<Invitation> findByTeam(Integer teamId) {
-	return repo.findByTeam_id(teamId);
     }
     
     public void delete(Integer id) {

@@ -33,14 +33,6 @@ public class InvitationResource {
 	return ResponseEntity.ok().body(objDto);
     }
     
-//    @GetMapping(value="/{rowerId}/invitations")
-//    public ResponseEntity<List<InvitationDTO>> findInvitations(@PathVariable Integer rowerId) {
-//	List<Invitation> list = service.findByRower(rowerId);
-//	List<InvitationDTO> listDto = list.stream().map(obj -> new InvitationDTO(obj))
-//		.collect(Collectors.toList());
-//	return ResponseEntity.ok().body(listDto);
-//    }    
-        
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody InvitationDTO objDto) {
 	Invitation obj = service.fromDTO(objDto);

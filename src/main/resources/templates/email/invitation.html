@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title th:remove="all">Invitation</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+		<div>
+			<h1>
+				Você recebeu um convite para entrar no VA'A GURU.
+			</h1>
+			<p>
+				Equipe: <span th:text="${invitation.team.name}"></span>
+			</p>
+			<p>
+				Enviado por: <span th:text="${invitation.inviter.name}"></span>
+			</p>
+			<p>
+				Enviado em: <span th:text="${#dates.format(invitation.time, 'dd/MM/yyyy hh:mm')}"></span>
+			</p>
+			<h3>Baixe o aplicativo e confirme sua entrada na equipe:</h3>
+		</div>
+	</body>
+</html>

@@ -4,6 +4,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import br.com.hoptech.vaaguruapi.domain.Invitation;
 import br.com.hoptech.vaaguruapi.domain.Rower;
 
 public interface EmailService {
@@ -13,5 +14,9 @@ public interface EmailService {
     void sendHtmlEmail(MimeMessage msg);
 
     void sendNewPassawordEmail(Rower rower, String newPass);
+
+    void sendInvitationEmail(Invitation obj);
+
+    void sendInvitationHtmlEmail(Invitation obj);
     
 }
