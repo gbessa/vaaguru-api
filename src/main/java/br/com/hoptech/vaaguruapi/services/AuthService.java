@@ -19,8 +19,8 @@ public class AuthService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @Autowired
-//    private EmailService emailService;
+    @Autowired
+    private EmailService emailService;
 
     private Random rand = new Random();
 
@@ -36,7 +36,7 @@ public class AuthService {
 
 	rowerRepository.save(rower);
 
-//	emailService.sendNewPassawordEmail(rower, newPass);
+	emailService.sendNewPassawordEmail(rower, newPass);
 
     }
 
