@@ -1,6 +1,7 @@
 package br.com.hoptech.vaaguruapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,7 +27,6 @@ public class VaaguruApiApplication implements CommandLineRunner {
 	    
 	    if (rowerService.findAll().isEmpty()) {
 		System.out.println("===== POPULANDO BD ==========");
-		System.out.println(System.getenv("MAIL_PASSWORD"));
 		dbService.instantiateDatabase();		
 	    }
 	}
