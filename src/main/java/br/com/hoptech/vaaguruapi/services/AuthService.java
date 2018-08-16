@@ -28,7 +28,7 @@ public class AuthService {
 
 	Rower rower = rowerRepository.findByEmail(email);
 	if (rower == null) {
-	    throw new ObjectNotFoundException("Email not found");
+	    throw new ObjectNotFoundException("Email not found: " + email);
 	}
 
 	String newPass = newPassword();
