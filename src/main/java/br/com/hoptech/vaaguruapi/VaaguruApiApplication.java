@@ -25,6 +25,8 @@ public class VaaguruApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 	    
 	    if (rowerService.findAll().isEmpty()) {
+		System.out.println("===== POPULANDO BD ==========");
+		System.out.println(System.getenv("MAIL_PASSWORD"));
 		dbService.instantiateDatabase();		
 	    }
 	}
