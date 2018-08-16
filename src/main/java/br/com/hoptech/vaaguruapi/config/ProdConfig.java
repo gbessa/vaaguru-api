@@ -20,16 +20,17 @@ public class ProdConfig {
     private DBService dbService;
     
     @Value("${vaaguru.database.instantiate}")
-    private Boolean instantiateDatabase;
+    private String instantiateDatabaseFlag;
     
     @Bean
     public boolean instantiateDatabase() throws ParseException {
-	System.out.println(instantiateDatabase);
-	if (instantiateDatabase) {
+	System.out.println(instantiateDatabaseFlag);
+	if (instantiateDatabaseFlag == "true") {
 	    System.out.println("Entrou");
 	    dbService.instantiateDatabase();
+	    return true;
 	}
-	return instantiateDatabase;
+	return false;
     }
     
     @Bean
