@@ -21,6 +21,14 @@ public class TestConfig {
 //    }
     
     @Bean
+    public Boolean printLoad() {
+	System.out.println("\n##########################################");
+	System.out.println("############### TEST MODE ################");
+	System.out.println("##########################################\n");
+	return true;
+    }
+    
+    @Bean
     public EmailService emailService() {
 //	return new SmtpEmailService();
 	return new MockEmailService();	

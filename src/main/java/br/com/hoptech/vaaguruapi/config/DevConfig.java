@@ -36,4 +36,12 @@ public class DevConfig {
 	return new SmtpEmailService();	
     }
     
+    @Bean
+    public Boolean printLoad() {
+	System.out.println("\n##########################################");
+	System.out.println("############### DEV MODE ################");
+	System.out.println("##########################################\n");
+	return true;
+    }    
+    
 }
