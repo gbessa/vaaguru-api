@@ -1,5 +1,6 @@
 package br.com.hoptech.vaaguruapi.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Team {
-    @SuppressWarnings("unused")
+public class Team implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id

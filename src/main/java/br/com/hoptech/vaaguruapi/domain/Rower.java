@@ -1,5 +1,6 @@
 package br.com.hoptech.vaaguruapi.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Rower {
-    @SuppressWarnings("unused")
+public class Rower implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -34,6 +34,7 @@ public class Rower {
     
     @JsonIgnore	
     private String password;
+    
     @JsonIgnore
     @OneToMany(mappedBy = "rower")
     private List<Inscription> inscriptions = new ArrayList<>();

@@ -1,9 +1,10 @@
 package br.com.hoptech.vaaguruapi.dto;
 
+import java.io.Serializable;
+
 import br.com.hoptech.vaaguruapi.domain.Invitation;
 
-public class InvitationDTO {
-    @SuppressWarnings("unused")
+public class InvitationDTO implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private String invited_email;

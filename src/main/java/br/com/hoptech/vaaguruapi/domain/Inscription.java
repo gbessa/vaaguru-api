@@ -1,5 +1,6 @@
 package br.com.hoptech.vaaguruapi.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,8 +13,7 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Inscription {
-    @SuppressWarnings("unused")
+public class Inscription implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id

@@ -1,5 +1,6 @@
 package br.com.hoptech.vaaguruapi.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.hoptech.vaaguruapi.dto.ScheduleDTO;
 
 @Entity
-public class Schedule {
-    @SuppressWarnings("unused")
+public class Schedule implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id

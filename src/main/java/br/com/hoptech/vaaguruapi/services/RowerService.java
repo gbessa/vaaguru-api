@@ -5,12 +5,17 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.hoptech.vaaguruapi.domain.Rower;
+import br.com.hoptech.vaaguruapi.dto.RowerNewDTO;
 import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 import br.com.hoptech.vaaguruapi.security.UserSS;
 import br.com.hoptech.vaaguruapi.services.exceptions.AuthorizationException;
@@ -20,6 +25,9 @@ import br.com.hoptech.vaaguruapi.services.exceptions.ObjectNotFoundException;
 public class RowerService {
 
     @Autowired
+    private ModelMapper modelMapper;
+    
+    @Autowired
     RowerRepository repo;
     
     @Autowired
@@ -27,6 +35,9 @@ public class RowerService {
     
     @Autowired
     private S3Service s3Service;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;    
     
     @Value("${img.prefix.client.profile}")
     private String imgPrefix;
@@ -75,6 +86,13 @@ public class RowerService {
 	return repo.findByTeamsMember_id(teamId);
     }
     
+    @Transactional
+    public Rower insert(Rower obj) {
+	obj.setId(null);
+	obj = repo.save(obj);
+	return obj;
+    } 
+    
     public URI uploadProfilePicture(MultipartFile multipartFile) {
 	
 	UserSS user = UserService.authenticated();
@@ -90,6 +108,12 @@ public class RowerService {
 	
 	return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	
+    }
+    
+    public Rower fromDTO(RowerNewDTO objDto) {
+	Rower obj = modelMapper.map(objDto, Rower.class);
+	obj.setPassword(passwordEncoder.encode(objDto.getPassword()));
+	return obj;
     }
     
 }
