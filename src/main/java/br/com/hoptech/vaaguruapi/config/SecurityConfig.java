@@ -15,13 +15,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
+import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.com.hoptech.vaaguruapi.adapters.FacebookSignInAdapter;
 import br.com.hoptech.vaaguruapi.security.JWTAuthenticationFilter;
 import br.com.hoptech.vaaguruapi.security.JWTAuthorizationFilter;
 import br.com.hoptech.vaaguruapi.security.JWTUtil;
+import br.com.hoptech.vaaguruapi.services.FacebookConnectionSignup;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;  
+    
+    @Autowired
+    private ConnectionFactoryLocator connectionFactoryLocator;
+ 
+    @Autowired
+    private UsersConnectionRepository usersConnectionRepository;
+ 
+    @Autowired
+    private FacebookConnectionSignup facebookConnectionSignup;
 
     @Autowired
     private Environment env;
@@ -48,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS_POST = { 
 	    "/auth/forgot**",
+	    "/auth/facebook**",
 	    "/rowers/**"};
     
     private static final String[] PUBLIC_MATCHERS_DELETE = { 
@@ -61,17 +77,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    http.headers().frameOptions().disable();
 	}
 
-	http.cors().and().csrf().disable(); // Não precisa de proteção contra ataque de Sessão, pois o sistema será
-					    // stateless
+	http.cors().and().csrf().disable(); // Não precisa de proteção contra ataque de Sessão, pois o sistema será stateless
+	
 	http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 		.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 		.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_DELETE).permitAll()
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
 		.anyRequest().authenticated();
+	
 	http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 	http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	
+    }
+    
+    @Bean
+    public ProviderSignInController providerSignInController() {
+        ((InMemoryUsersConnectionRepository) usersConnectionRepository)
+          .setConnectionSignUp(facebookConnectionSignup);
+         
+        return new ProviderSignInController(
+          connectionFactoryLocator, 
+          usersConnectionRepository, 
+          new FacebookSignInAdapter());
     }
     
     @Override

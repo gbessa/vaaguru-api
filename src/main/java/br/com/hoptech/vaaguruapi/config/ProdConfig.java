@@ -26,7 +26,6 @@ public class ProdConfig {
     public boolean instantiateDatabase() throws ParseException {
 	System.out.println(instantiateDatabaseFlag);
 	if (instantiateDatabaseFlag == "true") {
-	    System.out.println("Entrou");
 	    dbService.instantiateDatabase();
 	    return true;
 	}
