@@ -53,6 +53,8 @@ public class AuthResource {
     @PostMapping(value="/facebook")
     public ResponseEntity<Void> facebookLogin(@Valid @RequestBody String token, HttpServletResponse response) throws IOException {
 	System.out.println("Facebook Login => " + token);
+	
+	
 	    
 //	String urlString = "https://graph.facebook.com/";
 	//String urlString = "https://vaaguru-api.herokuapp.com/countries";

@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -15,37 +16,23 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
-import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import br.com.hoptech.vaaguruapi.adapters.FacebookSignInAdapter;
 import br.com.hoptech.vaaguruapi.security.JWTAuthenticationFilter;
 import br.com.hoptech.vaaguruapi.security.JWTAuthorizationFilter;
 import br.com.hoptech.vaaguruapi.security.JWTUtil;
-import br.com.hoptech.vaaguruapi.services.FacebookConnectionSignup;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@ComponentScan(basePackages = { "br.com.hoptech.vaaguru.security" })
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;  
     
-    @Autowired
-    private ConnectionFactoryLocator connectionFactoryLocator;
- 
-    @Autowired
-    private UsersConnectionRepository usersConnectionRepository;
- 
-    @Autowired
-    private FacebookConnectionSignup facebookConnectionSignup;
-
     @Autowired
     private Environment env;
     
@@ -90,17 +77,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	
-    }
-    
-    @Bean
-    public ProviderSignInController providerSignInController() {
-        ((InMemoryUsersConnectionRepository) usersConnectionRepository)
-          .setConnectionSignUp(facebookConnectionSignup);
-         
-        return new ProviderSignInController(
-          connectionFactoryLocator, 
-          usersConnectionRepository, 
-          new FacebookSignInAdapter());
     }
     
     @Override

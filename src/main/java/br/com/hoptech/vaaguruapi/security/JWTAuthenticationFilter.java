@@ -1,6 +1,10 @@
 package br.com.hoptech.vaaguruapi.security;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,13 +37,49 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-	    throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
 	try {
 	    CredentialsDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredentialsDTO.class);
-	    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(),
-		    creds.getPassword(), new ArrayList<>());
+	    String email;
+	    String password;
+	    if (creds.getFacebookToken().equals("")) {
+		email = creds.getEmail();
+		password = creds.getPassword();
+	    } else {
+		String urlString = "https://graph.facebook.com/" + creds.getFacebookToken();
+		URL url = new URL(urlString);
+				
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		StringBuilder result = new StringBuilder();
+		conn.setRequestMethod("GET");
+		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		
+		String line;
+		while ((line = rd.readLine()) != null) {
+		    result.append(line);
+		}
+		rd.close();
+		
+		System.out.println(result.toString());
+		
+		email = "gbvirtual@gmail.com";
+		password = "123";
+	    }
+	    
+	///*	URL url = new URL(urlString);
+//		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//		StringBuilder result = new StringBuilder();
+//		conn.setRequestMethod("GET");
+//		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	//	
+//		String line;
+//		while ((line = rd.readLine()) != null) {
+//		    result.append(line);
+//		}
+//		rd.close();*/
+	    
+	    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
 	    Authentication auth = authenticationManager.authenticate(authToken);
 	    return auth;
 	} catch (IOException e) {
