@@ -47,14 +47,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		email = creds.getEmail();
 		password = creds.getPassword();
 	    } else {
-		String urlString = "https://graph.facebook.com/" + creds.getFacebookToken();
+		String urlString = "https://graph.facebook.com/1953600424695985?fields=email";
 		URL url = new URL(urlString);
 				
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		StringBuilder result = new StringBuilder();
+		conn.setRequestProperty("Authorization", "Bearer " + creds.getFacebookToken());
 		conn.setRequestMethod("GET");
 		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		
+		StringBuilder result = new StringBuilder();
 		String line;
 		while ((line = rd.readLine()) != null) {
 		    result.append(line);
