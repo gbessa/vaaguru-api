@@ -22,19 +22,27 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.dto.CredentialsDTO;
+import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter  {
     
     private AuthenticationManager authenticationManager;
 
     private JWTUtil jwtUtil;
+    
+    private RowerRepository rowerRepository;
+    
+   // @Autowired
+    //RowerRepository rowerRepository;
+    //RowerService rowerService;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, RowerRepository rowerRepository) {
 	setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 	this.authenticationManager = authenticationManager;
 	this.jwtUtil = jwtUtil;
-    }
+	this.rowerRepository = rowerRepository;    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -47,38 +55,31 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		email = creds.getEmail();
 		password = creds.getPassword();
 	    } else {
+		
 		String urlString = "https://graph.facebook.com/1953600424695985?fields=email";
-		URL url = new URL(urlString);
-				
+		URL url = new URL(urlString);				
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestProperty("Authorization", "Bearer " + creds.getFacebookToken());
 		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Accept", "application/json");
+
 		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		
 		StringBuilder result = new StringBuilder();
 		String line;
 		while ((line = rd.readLine()) != null) {
 		    result.append(line);
 		}
-		rd.close();
+		rd.close();		
+		conn.disconnect();
 		
 		System.out.println(result.toString());
+		CredentialsDTO cred = new ObjectMapper().readValue(result.toString(), CredentialsDTO.class);
+		email = cred.getEmail();
+		System.out.println(email);
 		
-		email = "gbvirtual@gmail.com";
-		password = "123";
+		Rower rower = rowerRepository.findByEmail(email);
+		password = rower.getPassword();
 	    }
-	    
-	///*	URL url = new URL(urlString);
-//		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//		StringBuilder result = new StringBuilder();
-//		conn.setRequestMethod("GET");
-//		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	//	
-//		String line;
-//		while ((line = rd.readLine()) != null) {
-//		    result.append(line);
-//		}
-//		rd.close();*/
 	    
 	    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
 	    Authentication auth = authenticationManager.authenticate(authToken);

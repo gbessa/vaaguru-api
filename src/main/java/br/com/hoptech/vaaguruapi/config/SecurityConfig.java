@@ -20,6 +20,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 import br.com.hoptech.vaaguruapi.security.JWTAuthenticationFilter;
 import br.com.hoptech.vaaguruapi.security.JWTAuthorizationFilter;
 import br.com.hoptech.vaaguruapi.security.JWTUtil;
@@ -38,6 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private JWTUtil jwtUtil;
+    
+    @Autowired
+    RowerRepository rowerRepository;
     
     private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
     
@@ -73,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
 		.anyRequest().authenticated();
 	
-	http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+	http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil, rowerRepository));
 	http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	
