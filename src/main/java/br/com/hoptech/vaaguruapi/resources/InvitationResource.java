@@ -1,6 +1,8 @@
 package br.com.hoptech.vaaguruapi.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -17,7 +19,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.hoptech.vaaguruapi.domain.Invitation;
 import br.com.hoptech.vaaguruapi.dto.InvitationDTO;
+import br.com.hoptech.vaaguruapi.security.UserSS;
 import br.com.hoptech.vaaguruapi.services.InvitationService;
+import br.com.hoptech.vaaguruapi.services.UserService;
 
 @RestController
 @RequestMapping("/invitations")
@@ -25,6 +29,16 @@ public class InvitationResource {
     
     @Autowired
     InvitationService service;
+    
+    @GetMapping()
+    public ResponseEntity<List<InvitationDTO>> findInvitations() {
+	UserSS user = UserService.authenticated();
+	String email = user.getUsername();
+	List<Invitation> list = service.findByInvitedEmail(email);
+	List<InvitationDTO> listDto = list.stream().map(obj -> new InvitationDTO(obj))
+		.collect(Collectors.toList());
+	return ResponseEntity.ok().body(listDto);
+    } 
     
     @GetMapping(value="/{id}")
     public ResponseEntity<InvitationDTO> find(@PathVariable Integer id) {

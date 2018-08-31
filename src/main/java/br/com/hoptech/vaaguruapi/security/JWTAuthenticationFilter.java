@@ -29,20 +29,15 @@ import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter  {
     
     private AuthenticationManager authenticationManager;
-
     private JWTUtil jwtUtil;
-    
     private RowerRepository rowerRepository;
-    
-   // @Autowired
-    //RowerRepository rowerRepository;
-    //RowerService rowerService;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, RowerRepository rowerRepository) {
 	setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 	this.authenticationManager = authenticationManager;
 	this.jwtUtil = jwtUtil;
-	this.rowerRepository = rowerRepository;    }
+	this.rowerRepository = rowerRepository;    
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -79,11 +74,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		Rower rower = rowerRepository.findByEmail(email);
 		password = rower.getPassword();
+		System.out.println(password);
+		//password = "1234";
 	    }
 	    
 	    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
+
 	    Authentication auth = authenticationManager.authenticate(authToken);
+	    
 	    return auth;
+	    
 	} catch (IOException e) {
 	    throw new RuntimeException(e);
 	}
@@ -94,6 +94,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	    Authentication auth) throws IOException, ServletException {
 	String username = ((UserSS) auth.getPrincipal()).getUsername();
 	String token = jwtUtil.generateToken(username);
+	System.out.println("token generated: " + token);
 	res.addHeader("Authorization", "Bearer " + token);
 	res.addHeader("access-control-expose-headers", "Authorization");
     }

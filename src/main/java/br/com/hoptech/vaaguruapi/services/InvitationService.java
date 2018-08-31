@@ -41,6 +41,10 @@ public class InvitationService {
 	return repo.findByTeam_id(teamId);
     }
     
+    public List<Invitation> findByInvitedEmail(String email) {
+	return repo.findByInvitedEmail(email);
+    }
+    
     @Transactional
     public Invitation insert(Invitation obj) {
 	obj.setId(null);
