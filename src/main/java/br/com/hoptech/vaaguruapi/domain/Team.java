@@ -3,6 +3,8 @@ package br.com.hoptech.vaaguruapi.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -110,6 +112,9 @@ public class Team implements Serializable {
 	this.owners = owners;
     }
 
+    public List<Rower> getMembersAndOwners() {
+	return Stream.concat(members.stream(), owners.stream()).collect(Collectors.toList());
+    }
    
     
 }
