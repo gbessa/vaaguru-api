@@ -11,7 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 public class SmtpEmailService extends AbstractEmailService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class); 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SmtpEmailService.class.getName()); 
     
     @Autowired
     private MailSender mailSender;
@@ -21,17 +21,17 @@ public class SmtpEmailService extends AbstractEmailService {
     
     @Override
     public void sendEmail(SimpleMailMessage msg) {
-	LOG.info("Realizando envio de Email - Pelo GMAIL (ATENÇÃO!!)");
+	LOGGER.info("Realizando envio de Email - Pelo GMAIL (ATENÇÃO!!)");
 	mailSender.send(msg);
-	LOG.info("Email enviado");
+	LOGGER.info("Email enviado");
 	
     }
 
     @Override
     public void sendHtmlEmail(MimeMessage mm) {
-	LOG.info("Realizando envio de Email em HTML - Pelo GMAIL (ATENÇÃO!!)");
+	LOGGER.info("Realizando envio de Email em HTML - Pelo GMAIL (ATENÇÃO!!)");
 	javaMailSender.send(mm);
-	LOG.info("Email enviado");
+	LOGGER.info("Email enviado");
 	
     }
 

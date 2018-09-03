@@ -133,20 +133,20 @@ public class Rower implements Serializable {
 	this.password = password;
     }
    
-    public List<Team> getOwners() {
+    public List<Team> getTeamsOwner() {
         return teamsOwner;
     }
 
-    public void setOwners(List<Team> owners) {
-        this.teamsOwner = owners;
+    public void setTeamsOwner(List<Team> teamsOwner) {
+        this.teamsOwner = teamsOwner;
     }
 
-    public List<Team> getMembers() {
+    public List<Team> getTeamsMember() {
         return teamsMember;
     }
 
-    public void setMembers(List<Team> members) {
-        this.teamsMember = members;
+    public void setTeamsMember(List<Team> teamsMember) {
+        this.teamsMember = teamsMember;
     }
 
     @Override

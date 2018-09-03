@@ -13,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,8 @@ import br.com.hoptech.vaaguruapi.dto.CredentialsDTO;
 import br.com.hoptech.vaaguruapi.repositories.RowerRepository;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter  {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(JWTAuthenticationFilter.class.getName());
     
     private AuthenticationManager authenticationManager;
     private JWTUtil jwtUtil;
@@ -67,14 +71,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		rd.close();		
 		conn.disconnect();
 		
-		System.out.println(result.toString());
+		LOGGER.info(result.toString());
 		CredentialsDTO cred = new ObjectMapper().readValue(result.toString(), CredentialsDTO.class);
 		email = cred.getEmail();
-		System.out.println(email);
+		LOGGER.info(email);
 		
 		Rower rower = rowerRepository.findByEmail(email);
 		password = rower.getPassword();
-		System.out.println(password);
+		LOGGER.info(password);
 		//password = "1234";
 	    }
 	    

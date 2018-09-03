@@ -13,6 +13,7 @@ import br.com.hoptech.vaaguruapi.domain.Invitation;
 import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.dto.InvitationDTO;
+import br.com.hoptech.vaaguruapi.dto.InvitationNewDTO;
 import br.com.hoptech.vaaguruapi.repositories.InvitationRepository;
 import br.com.hoptech.vaaguruapi.services.exceptions.ObjectNotFoundException;
 
@@ -42,7 +43,7 @@ public class InvitationService {
     }
     
     public List<Invitation> findByInvitedEmail(String email) {
-	return repo.findByInvitedEmail(email);
+	return repo.findByInvitedEmailAndStatus(email, 1);
     }
     
     @Transactional
@@ -55,11 +56,30 @@ public class InvitationService {
 	return obj;
     }
     
+    public Invitation update(Invitation obj) {
+	Invitation newObj = find(obj.getId());
+	updateData(newObj, obj);
+	Rower rowerInvited = rowerService.findByEmail(obj.getInvitedEmail());
+	rowerInvited.getTeamsMember().add(obj.getTeam());
+	return repo.save(newObj);
+    }
+
+    private void updateData(Invitation newObj, Invitation obj) {
+	newObj.setStatus(obj.getStatus());
+    }    
+    
     public void delete(Integer id) {
 	Invitation obj = find(id);
 	repo.delete(obj);
     }
 
+    public Invitation fromDTO(InvitationNewDTO objDto) {
+	Team team = teamService.find(objDto.getTeam_id());
+	Rower inviter = rowerService.findByEmail(objDto.getInviter_email());
+	Invitation obj = new Invitation(null, null, team, inviter, objDto.getInvited_email(), objDto.getStatus());
+	return obj;
+    }
+    
     public Invitation fromDTO(InvitationDTO objDto) {
 	Team team = teamService.find(objDto.getTeam_id());
 	Rower inviter = rowerService.findByEmail(objDto.getInviter_email());

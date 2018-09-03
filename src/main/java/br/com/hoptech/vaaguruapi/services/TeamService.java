@@ -76,12 +76,11 @@ public class TeamService {
 
     @Transactional
     public Team insert(Team obj) {
-	System.out.println(obj.getOwners().get(0).getEmail());
 	obj.setId(null);
 	obj = repo.save(obj);
 	
 	Rower owner = rowerService.findByEmail(obj.getOwners().get(0).getEmail());
-	owner.getOwners().add(obj);
+	owner.getTeamsOwner().add(obj);
 	rowerRepository.save(owner);
 	return obj;
     }

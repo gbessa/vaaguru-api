@@ -13,7 +13,7 @@ import br.com.hoptech.vaaguruapi.services.RowerService;
 @SpringBootApplication
 public class VaaguruApiApplication implements CommandLineRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(VaaguruApiApplication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VaaguruApiApplication.class.getName());
     
     @Autowired
     private DBService dbService;
@@ -29,7 +29,7 @@ public class VaaguruApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 	    
 	    if (rowerService.findAll().isEmpty()) {
-		log.info("===== POPULANDO BD ==========");
+		LOGGER.info("===== POPULANDO BD ==========");
 		dbService.instantiateDatabase();		
 	    }
 	}

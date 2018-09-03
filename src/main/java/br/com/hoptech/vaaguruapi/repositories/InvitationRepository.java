@@ -15,6 +15,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, Integer>
     List<Invitation> findByTeam_id(Integer id);
     
     @Transactional(readOnly=true)
-    List<Invitation> findByInvitedEmail(String email);    
+    List<Invitation> findByInvitedEmailAndStatus(String email, Integer status);    
 
 }

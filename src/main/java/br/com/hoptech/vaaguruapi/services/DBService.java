@@ -62,22 +62,22 @@ public class DBService {
 	Rower rower5 = new Rower(null, "Ana Rita", "ana.rita@gmail.com.blocksend", "2199999995", true, "", pwdEncoder.encode("123"));
 	Rower rower6 = new Rower(null, "Paulo Eduardo", "peduardo@gmail.com.blocksend", "2199999996", true, "", pwdEncoder.encode("123"));
 	
-	rowerResp1.getOwners().addAll(Arrays.asList(team1));
-	rower6.getMembers().addAll(Arrays.asList(team1));
-	rower5.getMembers().addAll(Arrays.asList(team1));
+	rowerResp1.getTeamsOwner().addAll(Arrays.asList(team1));
+	rower6.getTeamsMember().addAll(Arrays.asList(team1));
+	rower5.getTeamsMember().addAll(Arrays.asList(team1));
 	
-	rowerResp2.getOwners().addAll(Arrays.asList(team2));
-	rower1.getMembers().addAll(Arrays.asList(team2, team4));
-	rower1.getOwners().addAll(Arrays.asList(team5));
+	rowerResp2.getTeamsOwner().addAll(Arrays.asList(team2));
+	rower1.getTeamsMember().addAll(Arrays.asList(team2, team4));
+	rower1.getTeamsOwner().addAll(Arrays.asList(team5));
 	
-	rowerResp3.getOwners().addAll(Arrays.asList(team3));
+	rowerResp3.getTeamsOwner().addAll(Arrays.asList(team3));
 	
-	rowerResp4.getOwners().addAll(Arrays.asList(team4));
-	rowerResp4.getMembers().addAll(Arrays.asList(team2, team4));
-	rowerResp4_1.getOwners().addAll(Arrays.asList(team4));	
-	rower2.getMembers().addAll(Arrays.asList(team4));
-	rower3.getMembers().addAll(Arrays.asList(team4));
-	rower4.getMembers().addAll(Arrays.asList(team4));
+	rowerResp4.getTeamsOwner().addAll(Arrays.asList(team4));
+	rowerResp4.getTeamsMember().addAll(Arrays.asList(team2, team4));
+	rowerResp4_1.getTeamsOwner().addAll(Arrays.asList(team4));	
+	rower2.getTeamsMember().addAll(Arrays.asList(team4));
+	rower3.getTeamsMember().addAll(Arrays.asList(team4));
+	rower4.getTeamsMember().addAll(Arrays.asList(team4));
 	
 	team1.getOwners().addAll(Arrays.asList(rowerResp1));
 	team1.getMembers().addAll(Arrays.asList(rower5, rower6));
