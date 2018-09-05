@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,21 +37,23 @@ public class Rower implements Serializable {
     private String password;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "rower")
+    @OneToMany(mappedBy = "rower", cascade=CascadeType.ALL)
     private List<Inscription> inscriptions = new ArrayList<>();
     
     @JsonIgnore
-    @OneToMany(mappedBy = "rower")
+    @OneToMany(mappedBy = "rower", cascade=CascadeType.ALL)
     private List<Schedule> schedules = new ArrayList<>();
     
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "OWNER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+//    @ManyToMany(cascade= CascadeType.MERGE)
+//    @JoinTable(name = "OWNER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    @ManyToMany(mappedBy="owners")
     private List<Team> teamsOwner = new ArrayList<>();
     
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "MEMBER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+//    @ManyToMany(cascade= CascadeType.MERGE)
+//    @JoinTable(name = "MEMBER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    @ManyToMany(mappedBy="members")
     private List<Team> teamsMember = new ArrayList<>();
     
 //    @JsonIgnore

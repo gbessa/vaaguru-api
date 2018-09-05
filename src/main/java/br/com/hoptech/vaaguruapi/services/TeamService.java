@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.hoptech.vaaguruapi.domain.Inscription;
 import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.dto.TeamDTO;
@@ -101,4 +102,10 @@ public class TeamService {
 	return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	
     }
+    
+    public void delete(Integer id) {
+	Team obj = find(id);
+	repo.delete(obj);
+    }
+    
 }

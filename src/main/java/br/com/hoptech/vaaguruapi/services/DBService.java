@@ -92,9 +92,9 @@ public class DBService {
 	
 	team5.getOwners().addAll(Arrays.asList(rower1));
 	
-	teamRepository.saveAll(Arrays.asList(team1, team2, team3, team4, team5));
 	rowerRepository.saveAll(Arrays.asList(rowerResp1, rowerResp2, rowerResp3, rowerResp4, rowerResp4_1));
 	rowerRepository.saveAll(Arrays.asList(rower1, rower2, rower3, rower4, rower5, rower6));
+	teamRepository.saveAll(Arrays.asList(team1, team2, team3, team4, team5));
 		
 	//CREATING SCHEDULE AND INSCRIPTIONS
 	Calendar cal = Calendar.getInstance();
