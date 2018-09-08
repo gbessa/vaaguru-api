@@ -102,4 +102,11 @@ public class TeamResource {
 	return ResponseEntity.accepted().build();
     }
     
+    @GetMapping(value="/{teamId}/unsubscribe")
+    public ResponseEntity<Void> unsubscribe(@PathVariable Integer teamId) {
+	Team obj = service.find(teamId);
+	service.unsubscribeMe(obj);
+	return ResponseEntity.accepted().build();
+    }
+    
 }

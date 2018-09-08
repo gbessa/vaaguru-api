@@ -7,12 +7,14 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.hoptech.vaaguruapi.domain.Inscription;
+import br.com.hoptech.vaaguruapi.VaaguruApiApplication;
 import br.com.hoptech.vaaguruapi.domain.Rower;
 import br.com.hoptech.vaaguruapi.domain.Team;
 import br.com.hoptech.vaaguruapi.dto.TeamDTO;
@@ -24,6 +26,8 @@ import br.com.hoptech.vaaguruapi.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class TeamService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TeamService.class.getName());
 
     @Autowired
     TeamRepository repo;
@@ -108,4 +112,14 @@ public class TeamService {
 	repo.delete(obj);
     }
     
+    public void unsubscribeMe(Team obj) {
+	UserSS user = UserService.authenticated();
+ 	String email = user.getUsername();
+ 	Rower rower = rowerService.findByEmail(email);
+ 	List<Rower> members = obj.getMembers();
+ 	Integer index = members.indexOf(rower);
+ 	members.remove(rower);
+ 	obj.setMembers(members);
+ 	repo.save(obj);
+    }
 }
