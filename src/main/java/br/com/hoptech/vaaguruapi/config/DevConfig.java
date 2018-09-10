@@ -2,6 +2,8 @@ package br.com.hoptech.vaaguruapi.config;
 
 import java.text.ParseException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,8 @@ import br.com.hoptech.vaaguruapi.services.SmtpEmailService;
 @Configuration
 @Profile("dev")
 public class DevConfig {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(DevConfig.class.getName());
 
     @Autowired
     private DBService dbService;
@@ -38,9 +42,12 @@ public class DevConfig {
     
     @Bean
     public Boolean printLoad() {
-	System.out.println("\n##########################################");
-	System.out.println("############### DEV MODE ################");
-	System.out.println("##########################################\n");
+	StringBuilder sb = new StringBuilder();
+	sb.append("\n##########################################");
+	sb.append("\n############### DEV MODE #################");
+	sb.append("\n##########################################");
+	
+	LOGGER.info(sb.toString());
 	return true;
     }    
     

@@ -1,5 +1,7 @@
 package br.com.hoptech.vaaguruapi.resources;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -40,4 +42,45 @@ public class AuthResource {
 	service.sendNewPassword(objDto.getEmail());
 	return ResponseEntity.noContent().build();
     }
+    
+    @PostMapping(value="/facebook")
+    public ResponseEntity<Void> facebookLogin(@Valid @RequestBody String token, HttpServletResponse response) throws IOException {
+	System.out.println("Facebook Login => " + token);
+	
+	
+	    
+//	String urlString = "https://graph.facebook.com/";
+	//String urlString = "https://vaaguru-api.herokuapp.com/countries";
+
+///*	URL url = new URL(urlString);
+//	HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//	StringBuilder result = new StringBuilder();
+//	conn.setRequestMethod("GET");
+//	BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//	
+//	String line;
+//	while ((line = rd.readLine()) != null) {
+//	    result.append(line);
+//	}
+//	rd.close();*/
+	
+//	System.out.println(result.toString());
+	
+	
+//	UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken("gbvirtual@gmail.com", "123");
+//	System.out.println(authReq.getName() + " --> " + authReq.getCredentials().toString());
+//	System.out.println(authManager.toString());
+//	
+//	Authentication auth = authManager.authenticate(authReq);
+//	
+//	SecurityContext securityContext = SecurityContextHolder.getContext();
+//	securityContext.setAuthentication(auth);
+//
+//	UserSS user2 = UserService.authenticated();
+//	String token2 = jwtUtil.generateToken(user2.getUsername());
+//	response.addHeader("Authorization", "Bearer " + token2);
+//	response.addHeader("access-control-expose-headers", "Authorization");
+	return ResponseEntity.noContent().build();	
+    }
+    
 }

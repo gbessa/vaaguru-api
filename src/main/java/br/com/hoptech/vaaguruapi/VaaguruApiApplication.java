@@ -1,7 +1,8 @@
 package br.com.hoptech.vaaguruapi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,8 @@ import br.com.hoptech.vaaguruapi.services.RowerService;
 @SpringBootApplication
 public class VaaguruApiApplication implements CommandLineRunner {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(VaaguruApiApplication.class.getName());
+    
     @Autowired
     private DBService dbService;
     
@@ -26,7 +29,7 @@ public class VaaguruApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 	    
 	    if (rowerService.findAll().isEmpty()) {
-		System.out.println("===== POPULANDO BD ==========");
+		LOGGER.info("===== POPULANDO BD ==========");
 		dbService.instantiateDatabase();		
 	    }
 	}

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,21 +37,23 @@ public class Rower implements Serializable {
     private String password;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "rower")
+    @OneToMany(mappedBy = "rower", cascade=CascadeType.ALL)
     private List<Inscription> inscriptions = new ArrayList<>();
     
     @JsonIgnore
-    @OneToMany(mappedBy = "rower")
+    @OneToMany(mappedBy = "rower", cascade=CascadeType.ALL)
     private List<Schedule> schedules = new ArrayList<>();
     
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "OWNER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+//    @ManyToMany(cascade= CascadeType.MERGE)
+//    @JoinTable(name = "OWNER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    @ManyToMany(mappedBy="owners")
     private List<Team> teamsOwner = new ArrayList<>();
     
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "MEMBER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+//    @ManyToMany(cascade= CascadeType.MERGE)
+//    @JoinTable(name = "MEMBER_TEAM", joinColumns = @JoinColumn(name = "rower_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    @ManyToMany(mappedBy="members")
     private List<Team> teamsMember = new ArrayList<>();
     
 //    @JsonIgnore
@@ -133,20 +136,20 @@ public class Rower implements Serializable {
 	this.password = password;
     }
    
-    public List<Team> getOwners() {
+    public List<Team> getTeamsOwner() {
         return teamsOwner;
     }
 
-    public void setOwners(List<Team> owners) {
-        this.teamsOwner = owners;
+    public void setTeamsOwner(List<Team> teamsOwner) {
+        this.teamsOwner = teamsOwner;
     }
 
-    public List<Team> getMembers() {
+    public List<Team> getTeamsMember() {
         return teamsMember;
     }
 
-    public void setMembers(List<Team> members) {
-        this.teamsMember = members;
+    public void setTeamsMember(List<Team> teamsMember) {
+        this.teamsMember = teamsMember;
     }
 
     @Override
