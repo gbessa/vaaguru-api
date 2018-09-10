@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import br.com.hoptech.vaaguruapi.services.DBService;
 import br.com.hoptech.vaaguruapi.services.RowerService;
 
+@EnableScheduling
 @SpringBootApplication
 public class VaaguruApiApplication implements CommandLineRunner {
 
