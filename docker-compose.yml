@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  vaaguru-db:
+    image: mysql
+    restart: always
+    container_name: vaaguru-db
+    environment:
+      MYSQL_DATABASE: vaaguru
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+
+  vaaguru-api:
+    build:
+      dockerfile: ./docker/api.dockerfile
+      context: .
+    image: hoptech/vaaguru-api
+    container_name: vaaguru-api
+    ports:
+      - 8080:8080
+    networks:
+      - production-network
+    depends_on:
+      - "vaaguru-db"
+
+networks:
+  production-network:
+    driver: bridge
