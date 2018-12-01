@@ -1,5 +1,6 @@
 package br.com.hoptech.vaaguruapi.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,8 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer>{
 
     @Transactional(readOnly=true)
     List<Schedule> findAllByTeamIn(List<Team> teamList);
+    
+    @Transactional(readOnly=true)
+    List<Schedule> findByDateBetween(Date start, Date end);
     
 }

@@ -45,6 +45,13 @@ public class ScheduleResource {
 	List<ScheduleDTO> listDto = list.stream().map(obj -> new ScheduleDTO(obj)).collect(Collectors.toList());
 	return ResponseEntity.ok().body(listDto);
     }
+    
+    @GetMapping(value = "/tomorrow")
+    public ResponseEntity<List<ScheduleDTO>> findAllTomorrow() {
+	List<Schedule> list = service.findAllTomorrow();
+	List<ScheduleDTO> listDto = list.stream().map(obj -> new ScheduleDTO(obj)).collect(Collectors.toList());
+	return ResponseEntity.ok().body(listDto);
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ScheduleDTO> find(@PathVariable Integer id) {

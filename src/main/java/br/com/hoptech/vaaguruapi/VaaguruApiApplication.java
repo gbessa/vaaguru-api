@@ -10,12 +10,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import br.com.hoptech.vaaguruapi.services.DBService;
 import br.com.hoptech.vaaguruapi.services.RowerService;
+import br.com.hoptech.vaaguruapi.services.WGScrapperService;
+import br.com.hoptech.vaaguruapi.services.WeatherCrawler;
 
 @EnableScheduling
 @SpringBootApplication
 public class VaaguruApiApplication implements CommandLineRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VaaguruApiApplication.class.getName());
+    
+    @Autowired
+    private WGScrapperService wgScrapperService;
     
     @Autowired
     private DBService dbService;
@@ -34,5 +39,10 @@ public class VaaguruApiApplication implements CommandLineRunner {
 		LOGGER.info("===== POPULANDO BD ==========");
 		dbService.instantiateDatabase();		
 	    }
+	    
+	    //weatherCrowler.fetchTest();
+	    
+	    wgScrapperService.scrapSpot("531525");
+	    
 	}
 }

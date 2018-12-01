@@ -1,5 +1,6 @@
 package br.com.hoptech.vaaguruapi.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,14 @@ public class ScheduleService {
     public List<Schedule> findAll() {
 	//return repo.findAll();
 	return repo.findAllByTeamIn(teamService.findAll());
+    }
+    
+    public List<Schedule> findAllTomorrow() {
+	Date startDay = new Date();
+	startDay.setHours(0);
+	Date endDay = new Date();
+	endDay.setHours(23);
+	return repo.findByDateBetween(startDay, endDay);
     }
     
     public Schedule fromDTO(ScheduleNewDTO objDto) {
